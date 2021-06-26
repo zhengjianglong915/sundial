@@ -1,7 +1,7 @@
-package cn.wegostack.sundial.scheduler.core.queue;
+package cn.wegostack.sundial.scheduler.core.trigger.queue;
 
 
-import cn.wegostack.sundial.scheduler.core.queue.impl.LocalQueue;
+import cn.wegostack.sundial.scheduler.core.trigger.queue.impl.LocalQueue;
 
 /**
  * @author zhengjianglong

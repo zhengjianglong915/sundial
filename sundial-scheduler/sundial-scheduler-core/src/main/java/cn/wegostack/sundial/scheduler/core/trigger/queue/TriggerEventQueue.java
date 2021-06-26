@@ -1,4 +1,4 @@
-package cn.wegostack.sundial.scheduler.core.queue;
+package cn.wegostack.sundial.scheduler.core.trigger.queue;
 
 
 /**

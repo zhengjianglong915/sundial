@@ -1,4 +1,4 @@
-package cn.wegostack.sundial.scheduler.core.queue;
+package cn.wegostack.sundial.scheduler.core.trigger.queue;
 
 import cn.wegostack.sundial.common.model.JobItem;
 import lombok.Data;

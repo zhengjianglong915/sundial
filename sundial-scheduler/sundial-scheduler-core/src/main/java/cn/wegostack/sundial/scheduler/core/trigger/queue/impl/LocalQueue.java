@@ -1,8 +1,8 @@
-package cn.wegostack.sundial.scheduler.core.queue.impl;
+package cn.wegostack.sundial.scheduler.core.trigger.queue.impl;
 
 
-import cn.wegostack.sundial.scheduler.core.queue.TriggerEvent;
-import cn.wegostack.sundial.scheduler.core.queue.TriggerEventQueue;
+import cn.wegostack.sundial.scheduler.core.trigger.queue.TriggerEvent;
+import cn.wegostack.sundial.scheduler.core.trigger.queue.TriggerEventQueue;
 
 import java.util.concurrent.ArrayBlockingQueue;
 

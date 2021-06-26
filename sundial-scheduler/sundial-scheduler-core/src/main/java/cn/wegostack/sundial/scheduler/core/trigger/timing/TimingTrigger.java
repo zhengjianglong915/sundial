@@ -4,10 +4,10 @@ import cn.wegostack.sundial.common.model.JobItem;
 import cn.wegostack.sundial.common.utils.DateUtils;
 import cn.wegostack.sundial.common.utils.Generator;
 import cn.wegostack.sundial.common.utils.LogUtils;
-import cn.wegostack.sundial.scheduler.core.queue.TriggerEvent;
-import cn.wegostack.sundial.scheduler.core.queue.TriggerEventQueue;
-import cn.wegostack.sundial.scheduler.core.queue.TriggerEventQueueFactory;
 import cn.wegostack.sundial.scheduler.core.trigger.ITrigger;
+import cn.wegostack.sundial.scheduler.core.trigger.queue.TriggerEvent;
+import cn.wegostack.sundial.scheduler.core.trigger.queue.TriggerEventQueue;
+import cn.wegostack.sundial.scheduler.core.trigger.queue.TriggerEventQueueFactory;
 import org.assertj.core.util.Maps;
 
 import javax.annotation.PostConstruct;
@@ -36,48 +36,40 @@ public class TimingTrigger implements ITrigger {
     public void init() {
         scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
         scheduledExecutorService.scheduleAtFixedRate(() -> {
-            schedule();
+            trigger();
         }, 1, 1, TimeUnit.SECONDS);
     }
 
-    private void schedule() {
+    /**
+     * Check whether there are jobs in the job queue that meet the trigger conditions.
+     * If they meet the trigger conditions, they will be triggered immediately.
+     */
+    private void trigger() {
         if (jobQueue.size() == 0) {
             return;
         }
 
         Date current = new Date();
         JobItem peek = jobQueue.peek();
+
+        // Get Job queue
+        TriggerEventQueue queue = TriggerEventQueueFactory.getQueue();
+
         while (checkTriggerCondition(peek, current)) {
             JobItem jobItem = jobQueue.poll();
-            LogUtils.info("[TimingTrigger] The job [%s] is meet the trigger condition.", jobItem.getId());
-
-            // Get queue
-            TriggerEventQueue queue = TriggerEventQueueFactory.getQueue();
+            LogUtils.info("[%s][TimingTrigger] The job [%s] is meet the trigger condition.",
+                    jobItem.getId(), jobItem.getName());
 
             // Build trigger event
-            TriggerEvent event = new TriggerEvent();
-            event.setJobItem(jobItem);
-            Date expectTriggerTime = DateUtils.parse(peek.getTriggerExp());
-            event.setExpTriggerTime(expectTriggerTime);
-            event.setTriggerTime(new Date());
-            event.setTriggerId(Generator.genTriggerId(jobItem.getJobId()));
+            TriggerEvent event = buildTriggerEvent(peek, jobItem);
 
-            // Offer the jobs that meet the trigger condition into queue, waiting to be scheduled.
+            // Offer the jobs that meet the trigger condition into queue,
+            // waiting to be scheduled.
             queue.offer(event);
 
             // Gets the next job that may meet the trigger condition
             peek = jobQueue.peek();
         }
-    }
-
-    private boolean checkTriggerCondition(JobItem peek, Date current) {
-        if (peek == null) {
-            return false;
-        }
-
-        // check if time is ready
-        Date triggerDate = DateUtils.parse(peek.getTriggerExp());
-        return triggerDate.before(current);
     }
 
     @Override
@@ -107,6 +99,26 @@ public class TimingTrigger implements ITrigger {
         cache.put(jobItem.getJobId(), jobItem);
         jobQueue.offer(jobItem);
         return true;
+    }
+
+    private boolean checkTriggerCondition(JobItem peek, Date current) {
+        if (peek == null) {
+            return false;
+        }
+
+        // check if time is ready
+        Date triggerDate = DateUtils.parse(peek.getTriggerExp());
+        return triggerDate.before(current);
+    }
+
+    private TriggerEvent buildTriggerEvent(JobItem peek, JobItem jobItem) {
+        TriggerEvent event = new TriggerEvent();
+        event.setJobItem(jobItem);
+        Date expectTriggerTime = DateUtils.parse(peek.getTriggerExp());
+        event.setExpTriggerTime(expectTriggerTime);
+        event.setTriggerTime(new Date());
+        event.setTriggerId(Generator.genTriggerId(jobItem.getJobId()));
+        return event;
     }
 
     /**
