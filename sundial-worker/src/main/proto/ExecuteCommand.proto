@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package sundial;
+option java_package = "cn.wegostack.sundial.worker.server";
+option java_outer_classname = "SundialWorker";
+
+service Hello {  // 定义服务
+    rpc SayHello (HelloRequest) returns (HelloResponse) {}
+}
+
+message HelloRequest { // 定义消息体
+    string name = 1;
+}
+
+message HelloResponse {
+    string message = 1;
+}

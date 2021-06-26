@@ -5,17 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cn.wegostack</groupId>
-    <artifactId>sundial-scheduler</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>sundial-scheduler-server</artifactId>
     <version>0.1.0</version>
-    <modules>
-        <module>sundial-scheduler-core</module>
-        <module>sundial-scheduler-dal</module>
-        <module>sundial-scheduler-bootstrap</module>
-        <module>sundial-scheduler-server</module>
-    </modules>
 
-    <name>sundial-scheduler</name>
+    <name>sundial-scheduler-server</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
 
@@ -35,7 +28,7 @@
 
         <dependency>
             <groupId>cn.wegostack</groupId>
-            <artifactId>sundial-common</artifactId>
+            <artifactId>sundial-scheduler-core</artifactId>
             <version>0.1.0</version>
             <scope>compile</scope>
         </dependency>

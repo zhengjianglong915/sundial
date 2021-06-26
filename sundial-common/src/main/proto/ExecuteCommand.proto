@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package sundial;
+option java_package = "cn.wegostack.sundial.common.proto";
+option java_outer_classname = "ExecuteCommandProto";
+
+service ExecuteTaskService {
+    rpc execute (ExecuteCommand) returns (CommandResult) {}
+}
+
+message ExecuteCommand {// 定义消息体
+    string name = 1;
+}
+
+message CommandResult {
+    string message = 1;
+}

@@ -1,6 +1,7 @@
 package cn.wegostack.sundial.scheduler.core.trigger;
 
-import cn.wegostack.sundial.scheduler.core.sundial.common.model.Job;
+
+import cn.wegostack.sundial.common.model.JobItem;
 
 /**
  * @author zhengjianglong
@@ -8,11 +9,11 @@ import cn.wegostack.sundial.scheduler.core.sundial.common.model.Job;
  */
 public interface ITrigger {
 
-    boolean add(Job job);
+    boolean add(JobItem job);
+
+    boolean remove(JobItem job);
 
 
-    boolean remove(Job job);
+    boolean refresh(JobItem job);
 
-
-    boolean refrash(Job job);
 }
