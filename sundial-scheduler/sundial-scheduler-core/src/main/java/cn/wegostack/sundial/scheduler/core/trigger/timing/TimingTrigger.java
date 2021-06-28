@@ -1,6 +1,7 @@
 package cn.wegostack.sundial.scheduler.core.trigger.timing;
 
 import cn.wegostack.sundial.common.model.JobItem;
+import cn.wegostack.sundial.common.threadpool.ScheduledService;
 import cn.wegostack.sundial.common.utils.DateUtils;
 import cn.wegostack.sundial.common.utils.Generator;
 import cn.wegostack.sundial.common.utils.LogUtils;
@@ -12,8 +13,6 @@ import org.assertj.core.util.Maps;
 
 import javax.annotation.PostConstruct;
 import java.util.*;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -22,7 +21,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class TimingTrigger implements ITrigger {
 
-    private ScheduledExecutorService scheduledExecutorService;
+    private ScheduledService scheduledService;
 
     /**
      * The Timing job are always executed once, and they are triggered at a specific time
@@ -34,10 +33,10 @@ public class TimingTrigger implements ITrigger {
 
     @PostConstruct
     public void init() {
-        scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
-        scheduledExecutorService.scheduleAtFixedRate(() -> {
+        scheduledService = new ScheduledService("TimingTrigger", () -> {
             trigger();
         }, 1, 1, TimeUnit.SECONDS);
+        scheduledService.start();
     }
 
     /**

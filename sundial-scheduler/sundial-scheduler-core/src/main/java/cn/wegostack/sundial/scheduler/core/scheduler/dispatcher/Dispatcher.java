@@ -8,7 +8,6 @@ import cn.wegostack.sundial.common.model.ScheduleContext;
 import cn.wegostack.sundial.common.model.Worker;
 import cn.wegostack.sundial.common.utils.LogUtils;
 import cn.wegostack.sundial.scheduler.core.discovery.IDiscovery;
-import cn.wegostack.sundial.scheduler.core.discovery.Publisher;
 import cn.wegostack.sundial.scheduler.core.invoker.IInvoker;
 import cn.wegostack.sundial.scheduler.core.loadbalance.ILoadBalance;
 import cn.wegostack.sundial.scheduler.core.loadbalance.LoadBalanceContext;
