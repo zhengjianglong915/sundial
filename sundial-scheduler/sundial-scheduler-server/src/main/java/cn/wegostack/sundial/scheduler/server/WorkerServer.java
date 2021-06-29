@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
  * @author zhengjianglong
  * @since 2021-06-26
  */
-public class WorkerServer {
+public class WorkerServer implements AutoCloseable {
 
     private Server server;
 
@@ -27,18 +27,12 @@ public class WorkerServer {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             LogUtils.error("[worker] shutting down gRPC server since JVM is shutting down");
             try {
-                this.stop();
-            } catch (InterruptedException e) {
+                this.close();
+            } catch (Exception e) {
                 e.printStackTrace(System.err);
             }
             System.err.println("*** server shut down");
         }));
-    }
-
-    private void stop() throws InterruptedException {
-        if (server != null) {
-            server.shutdown().awaitTermination(30, TimeUnit.SECONDS);
-        }
     }
 
     /**
@@ -47,6 +41,13 @@ public class WorkerServer {
     private void blockUntilShutdown() throws InterruptedException {
         if (server != null) {
             server.awaitTermination();
+        }
+    }
+
+    @Override
+    public void close() throws Exception {
+        if (server != null) {
+            server.shutdown().awaitTermination(30, TimeUnit.SECONDS);
         }
     }
 
