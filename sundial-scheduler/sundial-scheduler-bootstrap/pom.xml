@@ -16,6 +16,17 @@
     <properties>
         <java.version>1.8</java.version>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>1.1.21</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -32,9 +43,24 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
         <dependency>
             <groupId>cn.wegostack</groupId>
             <artifactId>sundial-scheduler-core</artifactId>
+            <version>0.1.0</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.wegostack</groupId>
+            <artifactId>sundail-scheduler-dal</artifactId>
+            <version>0.1.0</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.wegostack</groupId>
+            <artifactId>sundial-registry-server</artifactId>
             <version>0.1.0</version>
             <scope>compile</scope>
         </dependency>
@@ -48,5 +74,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

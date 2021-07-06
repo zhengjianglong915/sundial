@@ -7,6 +7,9 @@ import cn.wegostack.sundial.common.model.JobItem;
 import cn.wegostack.sundial.common.model.ScheduleContext;
 import cn.wegostack.sundial.common.model.Worker;
 import cn.wegostack.sundial.common.utils.LogUtils;
+import cn.wegostack.sundial.discovery.registry.model.Instance;
+import cn.wegostack.sundial.registry.client.model.Publisher;
+import cn.wegostack.sundial.registry.client.utils.DataIdUtils;
 import cn.wegostack.sundial.scheduler.core.discovery.IDiscovery;
 import cn.wegostack.sundial.scheduler.core.invoker.IInvoker;
 import cn.wegostack.sundial.scheduler.core.loadbalance.ILoadBalance;
@@ -14,10 +17,10 @@ import cn.wegostack.sundial.scheduler.core.loadbalance.LoadBalanceContext;
 import cn.wegostack.sundial.scheduler.core.router.IRouter;
 import cn.wegostack.sundial.scheduler.core.router.RouterContext;
 import org.apache.commons.collections.CollectionUtils;
+import org.assertj.core.util.Lists;
 
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * @author zhengjianglong
@@ -75,21 +78,25 @@ public class Dispatcher implements IDispatcher {
     }
 
     private List<Worker> discovery(JobItem jobItem) {
-        String dataId = Publisher.genDataId("Worker", jobItem.getWorkspaceId(), jobItem.getAppName());
-
-        List<Publisher<Worker>> publishers = this.discovery.discovery(jobItem.getNamespace(),
-                jobItem.getWorkspaceId(), dataId);
+        String dataId = jobItem.getAppName();
+        List<Instance> publishers = this.discovery.discovery(dataId);
         if (CollectionUtils.isEmpty(publishers)) {
             throw new RuntimeException(String.format("The instance of %s does not found",
                     jobItem.getAppName()));
         }
 
-        List<Worker> workerList = publishers.stream().map(Publisher::getValue)
-                .collect(Collectors.toList());
+        List<Worker> workerList = Lists.newArrayList();
+        for (Instance publisher : publishers) {
+            Worker worker = new Worker();
+            worker.setRemoteIp(publisher.getIp());
+            worker.setOriginIp(publisher.getIp());
+            workerList.add(worker);
+        }
         return workerList;
     }
 
-    private List<Worker> route(ScheduleContext context, JobItem jobItem, List<Worker> workers) {
+    private List<Worker> route(ScheduleContext context, JobItem jobItem,
+                               List<Worker> workers) {
         RouterContext routerContext = new RouterContext();
         routerContext.setWorkerGroup(jobItem.getWorkerGroup());
         routerContext.setTags(context.getTags());

@@ -9,10 +9,10 @@ import cn.wegostack.sundial.scheduler.core.trigger.ITrigger;
 import cn.wegostack.sundial.scheduler.core.trigger.queue.TriggerEvent;
 import cn.wegostack.sundial.scheduler.core.trigger.queue.TriggerEventQueue;
 import cn.wegostack.sundial.scheduler.core.trigger.queue.TriggerEventQueueFactory;
-import org.assertj.core.util.Maps;
 
 import javax.annotation.PostConstruct;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -28,7 +28,7 @@ public class TimingTrigger implements ITrigger {
      */
     private Queue<JobItem> jobQueue = new PriorityQueue(new TimeComparator());
 
-    private Map<String, JobItem> cache = Maps.newWeakHashMap();
+    private Map<String, JobItem> cache = new ConcurrentHashMap<>();
 
 
     @PostConstruct

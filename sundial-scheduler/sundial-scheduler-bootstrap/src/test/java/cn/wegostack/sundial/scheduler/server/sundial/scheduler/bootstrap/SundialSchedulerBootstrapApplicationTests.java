@@ -1,4 +1,4 @@
-package cn.wegostack.sundial.scheduler.server.sundial.scheduler.bootstrap;
+package cn.wegostack.sundial.scheduler.dal.sundial.scheduler.bootstrap;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

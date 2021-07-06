@@ -1,4 +1,4 @@
-package cn.wegostack.sundial.scheduler.server.sundial.scheduler.core.trigger.timing;
+package cn.wegostack.sundial.scheduler.dal.sundial.scheduler.core.trigger.timing;
 
 import cn.wegostack.sundial.common.model.JobItem;
 import cn.wegostack.sundial.scheduler.core.scheduler.SundialScheduler;

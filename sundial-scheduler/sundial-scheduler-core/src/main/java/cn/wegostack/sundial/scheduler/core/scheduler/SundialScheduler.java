@@ -4,18 +4,18 @@ import cn.wegostack.sundial.common.model.ScheduleContext;
 import cn.wegostack.sundial.common.utils.DateUtils;
 import cn.wegostack.sundial.common.utils.LogUtils;
 import cn.wegostack.sundial.scheduler.core.discovery.IDiscovery;
-import cn.wegostack.sundial.scheduler.core.discovery.LocalDiscovery;
+import cn.wegostack.sundial.scheduler.core.discovery.SundialDiscovery;
 import cn.wegostack.sundial.scheduler.core.invoker.IInvoker;
 import cn.wegostack.sundial.scheduler.core.invoker.RpcInvoker;
 import cn.wegostack.sundial.scheduler.core.loadbalance.ILoadBalance;
 import cn.wegostack.sundial.scheduler.core.loadbalance.RandomLoadBalance;
-import cn.wegostack.sundial.scheduler.core.trigger.queue.TriggerEvent;
-import cn.wegostack.sundial.scheduler.core.trigger.queue.TriggerEventQueue;
-import cn.wegostack.sundial.scheduler.core.trigger.queue.TriggerEventQueueFactory;
 import cn.wegostack.sundial.scheduler.core.router.IRouter;
 import cn.wegostack.sundial.scheduler.core.router.WorkerGroupRouter;
 import cn.wegostack.sundial.scheduler.core.scheduler.dispatcher.Dispatcher;
 import cn.wegostack.sundial.scheduler.core.scheduler.dispatcher.IDispatcher;
+import cn.wegostack.sundial.scheduler.core.trigger.queue.TriggerEvent;
+import cn.wegostack.sundial.scheduler.core.trigger.queue.TriggerEventQueue;
+import cn.wegostack.sundial.scheduler.core.trigger.queue.TriggerEventQueueFactory;
 import org.assertj.core.util.Lists;
 
 import java.util.Date;
@@ -45,7 +45,7 @@ public class SundialScheduler {
                 ScheduleContext context = buildContext(event);
 
                 // Create worker by job type
-                IDiscovery discovery = new LocalDiscovery();
+                IDiscovery discovery = new SundialDiscovery();
                 List<IRouter> routers = Lists.newArrayList(new WorkerGroupRouter());
                 ILoadBalance loadBalance = new RandomLoadBalance();
                 IInvoker invoker = new RpcInvoker();

@@ -16,6 +16,7 @@ public class ExecuteTaskServiceImpl extends ExecuteTaskServiceGrpc.ExecuteTaskSe
                         StreamObserver<ExecuteCommandProto.CommandResult> responseObserver) {
         LogUtils.info("[%s] received schedule event from sundial server");
 
+
         ExecuteCommandProto.CommandResult commandResult = ExecuteCommandProto.CommandResult
                 .newBuilder().setMessage("success").build();
         responseObserver.onNext(commandResult);

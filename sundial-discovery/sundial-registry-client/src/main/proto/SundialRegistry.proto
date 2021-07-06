@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package sundial;
+option java_package = "cn.wegostack.sundial.registry.client.proto";
+option java_outer_classname = "SundialRegistryProto";
+
+service SundialRegistry {
+    rpc publish (stream PublishCommand) returns (stream RegistryReply) {}
+    rpc subscribe (stream SubscribeCommand) returns (stream RegistryReply) {}
+    rpc heartbeat (stream HeartbeatCommand) returns (stream RegistryReply) {}
+}
+
+message PublishCommand {
+    string dataId = 1;
+    string hostName = 2;
+    string ip = 3;
+    string appName = 4;
+}
+
+message SubscribeCommand {
+    string dataId = 1;
+    string hostName = 2;
+    string ip = 3;
+    string appName = 4;
+}
+
+message HeartbeatCommand {
+    string hostName = 1;
+    string ip = 2;
+}
+
+message RegistryReply {
+    string status = 1;
+    string type = 2;
+    string content = 3;
+}

@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 public class Worker {
     // host name
-    private String name;
+    private String hostName;
 
     private String originIp;
 

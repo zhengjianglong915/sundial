@@ -1,4 +1,4 @@
-package cn.wegostack.sundial.scheduler.server.sundial.scheduler.core.sundial.common;
+package cn.wegostack.sundial.scheduler.dal.sundial.scheduler.core.sundial.common;
 
 import static org.junit.Assert.assertTrue;
 

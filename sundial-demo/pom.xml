@@ -8,6 +8,7 @@
         <version>2.5.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
     <groupId>cn.sundial</groupId>
     <artifactId>sundial-demo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -27,6 +28,12 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>cn.wegostack</groupId>
+            <artifactId>sundial-worker</artifactId>
+            <version>0.1.0</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -37,5 +44,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
