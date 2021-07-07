@@ -3,6 +3,8 @@ package cn.wegostack.sundial.discovery.registry;
 import cn.wegostack.sundial.discovery.registry.processor.SundialRegistryProcessor;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,8 @@ import java.util.concurrent.TimeUnit;
  */
 @Service
 public class SundialRegistryServer implements AutoCloseable {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SundialRegistryServer.class);
+
     private Server server;
 
     @Autowired
@@ -27,15 +31,15 @@ public class SundialRegistryServer implements AutoCloseable {
                 .build()
                 .start();
 
-        System.out.println("[registry] Server started, listening on " + port);
+        LOGGER.info("[registry] Server started, listening on " + port);
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            System.err.println("[worker] shutting down gRPC server since JVM is shutting down");
+            LOGGER.error("[registry] shutting down gRPC server since JVM is shutting down");
             try {
                 this.close();
             } catch (Exception e) {
                 e.printStackTrace(System.err);
             }
-            System.err.println("*** server shut down");
+            LOGGER.error("[registry] *** server shut down");
         }));
     }
 
@@ -59,6 +63,5 @@ public class SundialRegistryServer implements AutoCloseable {
         final SundialRegistryServer server = new SundialRegistryServer();
         server.start();
         server.blockUntilShutdown();
-
     }
 }

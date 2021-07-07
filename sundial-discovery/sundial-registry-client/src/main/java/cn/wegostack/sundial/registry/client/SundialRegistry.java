@@ -15,6 +15,8 @@ import com.alibaba.fastjson.JSON;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,6 +28,7 @@ import java.util.Map;
  * @since 2021-06-27
  */
 public class SundialRegistry implements Registry {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SundialRegistry.class);
 
     private final static int REGISTRY_PORT = 8600;
 
@@ -115,10 +118,6 @@ public class SundialRegistry implements Registry {
         return new StreamObserver<RegistryReply>() {
             @Override
             public void onNext(RegistryReply reply) {
-                System.out.println("=================");
-                System.out.println(reply.getType());
-                System.out.println(reply.getContent());
-                System.out.println("=================");
                 String type = reply.getType();
                 if (ReplyType.NOTIFY.name().equals(type)) {
                     DataInfo dataInfo = JSON.parseObject(reply.getContent(), DataInfo.class);
@@ -128,6 +127,11 @@ public class SundialRegistry implements Registry {
                         List<Publisher> publishers = dataInfo.getPublishers();
                         listener.notify(dataId, publishers);
                     }
+                } else if (ReplyType.SUBSCRIBE.name().equals(type)) {
+                    LOGGER.info("[registry] subscribe data success.");
+
+                } else if (ReplyType.PUBLISH.name().equals(type)) {
+                    LOGGER.info("[registry] publish data success.");
                 }
             }
 

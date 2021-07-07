@@ -2,7 +2,10 @@ package cn.wegostack.sundial.scheduler.core.discovery;
 
 import cn.wegostack.sundial.registry.client.api.SubscribeDataListener;
 import cn.wegostack.sundial.registry.client.model.Publisher;
+import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Map;
@@ -12,6 +15,7 @@ import java.util.Map;
  * @since 2021-07-04
  */
 public class SundialDiscovery implements IDiscovery, SubscribeDataListener {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SundialDiscovery.class);
 
     /**
      * dataId -> publishers
@@ -20,7 +24,7 @@ public class SundialDiscovery implements IDiscovery, SubscribeDataListener {
 
     @Override
     public void notify(String dataId, List<Publisher> publishers) {
-        System.out.println("received data =====");
+        LOGGER.info("received data, dataId={}, publishers={}", dataId, JSON.toJSON(publishers));
         publisherMap.put(dataId, publishers);
     }
 
