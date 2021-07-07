@@ -65,6 +65,18 @@ public final class SundialRegistryProto {
      */
     com.google.protobuf.ByteString
         getAppNameBytes();
+
+    /**
+     * <code>string envId = 5;</code>
+     * @return The envId.
+     */
+    String getEnvId();
+    /**
+     * <code>string envId = 5;</code>
+     * @return The bytes for envId.
+     */
+    com.google.protobuf.ByteString
+        getEnvIdBytes();
   }
   /**
    * Protobuf type {@code sundial.PublishCommand}
@@ -83,6 +95,7 @@ public final class SundialRegistryProto {
       hostName_ = "";
       ip_ = "";
       appName_ = "";
+      envId_ = "";
     }
 
     @Override
@@ -137,6 +150,12 @@ public final class SundialRegistryProto {
               String s = input.readStringRequireUtf8();
 
               appName_ = s;
+              break;
+            }
+            case 42: {
+              String s = input.readStringRequireUtf8();
+
+              envId_ = s;
               break;
             }
             default: {
@@ -323,6 +342,44 @@ public final class SundialRegistryProto {
       }
     }
 
+    public static final int ENVID_FIELD_NUMBER = 5;
+    private volatile Object envId_;
+    /**
+     * <code>string envId = 5;</code>
+     * @return The envId.
+     */
+    @Override
+    public String getEnvId() {
+      Object ref = envId_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        envId_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string envId = 5;</code>
+     * @return The bytes for envId.
+     */
+    @Override
+    public com.google.protobuf.ByteString
+        getEnvIdBytes() {
+      Object ref = envId_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (String) ref);
+        envId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private byte memoizedIsInitialized = -1;
     @Override
     public final boolean isInitialized() {
@@ -349,6 +406,9 @@ public final class SundialRegistryProto {
       if (!getAppNameBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 4, appName_);
       }
+      if (!getEnvIdBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, envId_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -369,6 +429,9 @@ public final class SundialRegistryProto {
       }
       if (!getAppNameBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, appName_);
+      }
+      if (!getEnvIdBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, envId_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -393,6 +456,8 @@ public final class SundialRegistryProto {
           .equals(other.getIp())) return false;
       if (!getAppName()
           .equals(other.getAppName())) return false;
+      if (!getEnvId()
+          .equals(other.getEnvId())) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -412,6 +477,8 @@ public final class SundialRegistryProto {
       hash = (53 * hash) + getIp().hashCode();
       hash = (37 * hash) + APPNAME_FIELD_NUMBER;
       hash = (53 * hash) + getAppName().hashCode();
+      hash = (37 * hash) + ENVID_FIELD_NUMBER;
+      hash = (53 * hash) + getEnvId().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -553,6 +620,8 @@ public final class SundialRegistryProto {
 
         appName_ = "";
 
+        envId_ = "";
+
         return this;
       }
 
@@ -583,6 +652,7 @@ public final class SundialRegistryProto {
         result.hostName_ = hostName_;
         result.ip_ = ip_;
         result.appName_ = appName_;
+        result.envId_ = envId_;
         onBuilt();
         return result;
       }
@@ -645,6 +715,10 @@ public final class SundialRegistryProto {
         }
         if (!other.getAppName().isEmpty()) {
           appName_ = other.appName_;
+          onChanged();
+        }
+        if (!other.getEnvId().isEmpty()) {
+          envId_ = other.envId_;
           onChanged();
         }
         this.mergeUnknownFields(other.unknownFields);
@@ -979,6 +1053,82 @@ public final class SundialRegistryProto {
         onChanged();
         return this;
       }
+
+      private Object envId_ = "";
+      /**
+       * <code>string envId = 5;</code>
+       * @return The envId.
+       */
+      public String getEnvId() {
+        Object ref = envId_;
+        if (!(ref instanceof String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          String s = bs.toStringUtf8();
+          envId_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
+      }
+      /**
+       * <code>string envId = 5;</code>
+       * @return The bytes for envId.
+       */
+      public com.google.protobuf.ByteString
+          getEnvIdBytes() {
+        Object ref = envId_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (String) ref);
+          envId_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string envId = 5;</code>
+       * @param value The envId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setEnvId(
+          String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        envId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string envId = 5;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearEnvId() {
+        
+        envId_ = getDefaultInstance().getEnvId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string envId = 5;</code>
+       * @param value The bytes for envId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setEnvIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        envId_ = value;
+        onChanged();
+        return this;
+      }
       @Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -1083,6 +1233,18 @@ public final class SundialRegistryProto {
      */
     com.google.protobuf.ByteString
         getAppNameBytes();
+
+    /**
+     * <code>string envId = 5;</code>
+     * @return The envId.
+     */
+    String getEnvId();
+    /**
+     * <code>string envId = 5;</code>
+     * @return The bytes for envId.
+     */
+    com.google.protobuf.ByteString
+        getEnvIdBytes();
   }
   /**
    * Protobuf type {@code sundial.SubscribeCommand}
@@ -1101,6 +1263,7 @@ public final class SundialRegistryProto {
       hostName_ = "";
       ip_ = "";
       appName_ = "";
+      envId_ = "";
     }
 
     @Override
@@ -1155,6 +1318,12 @@ public final class SundialRegistryProto {
               String s = input.readStringRequireUtf8();
 
               appName_ = s;
+              break;
+            }
+            case 42: {
+              String s = input.readStringRequireUtf8();
+
+              envId_ = s;
               break;
             }
             default: {
@@ -1341,6 +1510,44 @@ public final class SundialRegistryProto {
       }
     }
 
+    public static final int ENVID_FIELD_NUMBER = 5;
+    private volatile Object envId_;
+    /**
+     * <code>string envId = 5;</code>
+     * @return The envId.
+     */
+    @Override
+    public String getEnvId() {
+      Object ref = envId_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        envId_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string envId = 5;</code>
+     * @return The bytes for envId.
+     */
+    @Override
+    public com.google.protobuf.ByteString
+        getEnvIdBytes() {
+      Object ref = envId_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (String) ref);
+        envId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private byte memoizedIsInitialized = -1;
     @Override
     public final boolean isInitialized() {
@@ -1367,6 +1574,9 @@ public final class SundialRegistryProto {
       if (!getAppNameBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 4, appName_);
       }
+      if (!getEnvIdBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, envId_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -1387,6 +1597,9 @@ public final class SundialRegistryProto {
       }
       if (!getAppNameBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, appName_);
+      }
+      if (!getEnvIdBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, envId_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -1411,6 +1624,8 @@ public final class SundialRegistryProto {
           .equals(other.getIp())) return false;
       if (!getAppName()
           .equals(other.getAppName())) return false;
+      if (!getEnvId()
+          .equals(other.getEnvId())) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -1430,6 +1645,8 @@ public final class SundialRegistryProto {
       hash = (53 * hash) + getIp().hashCode();
       hash = (37 * hash) + APPNAME_FIELD_NUMBER;
       hash = (53 * hash) + getAppName().hashCode();
+      hash = (37 * hash) + ENVID_FIELD_NUMBER;
+      hash = (53 * hash) + getEnvId().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -1571,6 +1788,8 @@ public final class SundialRegistryProto {
 
         appName_ = "";
 
+        envId_ = "";
+
         return this;
       }
 
@@ -1601,6 +1820,7 @@ public final class SundialRegistryProto {
         result.hostName_ = hostName_;
         result.ip_ = ip_;
         result.appName_ = appName_;
+        result.envId_ = envId_;
         onBuilt();
         return result;
       }
@@ -1663,6 +1883,10 @@ public final class SundialRegistryProto {
         }
         if (!other.getAppName().isEmpty()) {
           appName_ = other.appName_;
+          onChanged();
+        }
+        if (!other.getEnvId().isEmpty()) {
+          envId_ = other.envId_;
           onChanged();
         }
         this.mergeUnknownFields(other.unknownFields);
@@ -1994,6 +2218,82 @@ public final class SundialRegistryProto {
   checkByteStringIsUtf8(value);
         
         appName_ = value;
+        onChanged();
+        return this;
+      }
+
+      private Object envId_ = "";
+      /**
+       * <code>string envId = 5;</code>
+       * @return The envId.
+       */
+      public String getEnvId() {
+        Object ref = envId_;
+        if (!(ref instanceof String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          String s = bs.toStringUtf8();
+          envId_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
+      }
+      /**
+       * <code>string envId = 5;</code>
+       * @return The bytes for envId.
+       */
+      public com.google.protobuf.ByteString
+          getEnvIdBytes() {
+        Object ref = envId_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (String) ref);
+          envId_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string envId = 5;</code>
+       * @param value The envId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setEnvId(
+          String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        envId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string envId = 5;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearEnvId() {
+        
+        envId_ = getDefaultInstance().getEnvId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string envId = 5;</code>
+       * @param value The bytes for envId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setEnvIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        envId_ = value;
         onChanged();
         return this;
       }
@@ -2785,24 +3085,36 @@ public final class SundialRegistryProto {
         getStatusBytes();
 
     /**
-     * <code>string type = 2;</code>
+     * <code>string msg = 2;</code>
+     * @return The msg.
+     */
+    String getMsg();
+    /**
+     * <code>string msg = 2;</code>
+     * @return The bytes for msg.
+     */
+    com.google.protobuf.ByteString
+        getMsgBytes();
+
+    /**
+     * <code>string type = 3;</code>
      * @return The type.
      */
     String getType();
     /**
-     * <code>string type = 2;</code>
+     * <code>string type = 3;</code>
      * @return The bytes for type.
      */
     com.google.protobuf.ByteString
         getTypeBytes();
 
     /**
-     * <code>string content = 3;</code>
+     * <code>string content = 4;</code>
      * @return The content.
      */
     String getContent();
     /**
-     * <code>string content = 3;</code>
+     * <code>string content = 4;</code>
      * @return The bytes for content.
      */
     com.google.protobuf.ByteString
@@ -2822,6 +3134,7 @@ public final class SundialRegistryProto {
     }
     private RegistryReply() {
       status_ = "";
+      msg_ = "";
       type_ = "";
       content_ = "";
     }
@@ -2865,10 +3178,16 @@ public final class SundialRegistryProto {
             case 18: {
               String s = input.readStringRequireUtf8();
 
-              type_ = s;
+              msg_ = s;
               break;
             }
             case 26: {
+              String s = input.readStringRequireUtf8();
+
+              type_ = s;
+              break;
+            }
+            case 34: {
               String s = input.readStringRequireUtf8();
 
               content_ = s;
@@ -2944,10 +3263,48 @@ public final class SundialRegistryProto {
       }
     }
 
-    public static final int TYPE_FIELD_NUMBER = 2;
+    public static final int MSG_FIELD_NUMBER = 2;
+    private volatile Object msg_;
+    /**
+     * <code>string msg = 2;</code>
+     * @return The msg.
+     */
+    @Override
+    public String getMsg() {
+      Object ref = msg_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        msg_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string msg = 2;</code>
+     * @return The bytes for msg.
+     */
+    @Override
+    public com.google.protobuf.ByteString
+        getMsgBytes() {
+      Object ref = msg_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (String) ref);
+        msg_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int TYPE_FIELD_NUMBER = 3;
     private volatile Object type_;
     /**
-     * <code>string type = 2;</code>
+     * <code>string type = 3;</code>
      * @return The type.
      */
     @Override
@@ -2964,7 +3321,7 @@ public final class SundialRegistryProto {
       }
     }
     /**
-     * <code>string type = 2;</code>
+     * <code>string type = 3;</code>
      * @return The bytes for type.
      */
     @Override
@@ -2982,10 +3339,10 @@ public final class SundialRegistryProto {
       }
     }
 
-    public static final int CONTENT_FIELD_NUMBER = 3;
+    public static final int CONTENT_FIELD_NUMBER = 4;
     private volatile Object content_;
     /**
-     * <code>string content = 3;</code>
+     * <code>string content = 4;</code>
      * @return The content.
      */
     @Override
@@ -3002,7 +3359,7 @@ public final class SundialRegistryProto {
       }
     }
     /**
-     * <code>string content = 3;</code>
+     * <code>string content = 4;</code>
      * @return The bytes for content.
      */
     @Override
@@ -3037,11 +3394,14 @@ public final class SundialRegistryProto {
       if (!getStatusBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, status_);
       }
+      if (!getMsgBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, msg_);
+      }
       if (!getTypeBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, type_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, type_);
       }
       if (!getContentBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, content_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, content_);
       }
       unknownFields.writeTo(output);
     }
@@ -3055,11 +3415,14 @@ public final class SundialRegistryProto {
       if (!getStatusBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, status_);
       }
+      if (!getMsgBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, msg_);
+      }
       if (!getTypeBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, type_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, type_);
       }
       if (!getContentBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, content_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, content_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -3078,6 +3441,8 @@ public final class SundialRegistryProto {
 
       if (!getStatus()
           .equals(other.getStatus())) return false;
+      if (!getMsg()
+          .equals(other.getMsg())) return false;
       if (!getType()
           .equals(other.getType())) return false;
       if (!getContent()
@@ -3095,6 +3460,8 @@ public final class SundialRegistryProto {
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + STATUS_FIELD_NUMBER;
       hash = (53 * hash) + getStatus().hashCode();
+      hash = (37 * hash) + MSG_FIELD_NUMBER;
+      hash = (53 * hash) + getMsg().hashCode();
       hash = (37 * hash) + TYPE_FIELD_NUMBER;
       hash = (53 * hash) + getType().hashCode();
       hash = (37 * hash) + CONTENT_FIELD_NUMBER;
@@ -3234,6 +3601,8 @@ public final class SundialRegistryProto {
         super.clear();
         status_ = "";
 
+        msg_ = "";
+
         type_ = "";
 
         content_ = "";
@@ -3265,6 +3634,7 @@ public final class SundialRegistryProto {
       public RegistryReply buildPartial() {
         RegistryReply result = new RegistryReply(this);
         result.status_ = status_;
+        result.msg_ = msg_;
         result.type_ = type_;
         result.content_ = content_;
         onBuilt();
@@ -3317,6 +3687,10 @@ public final class SundialRegistryProto {
         if (other == RegistryReply.getDefaultInstance()) return this;
         if (!other.getStatus().isEmpty()) {
           status_ = other.status_;
+          onChanged();
+        }
+        if (!other.getMsg().isEmpty()) {
+          msg_ = other.msg_;
           onChanged();
         }
         if (!other.getType().isEmpty()) {
@@ -3432,9 +3806,85 @@ public final class SundialRegistryProto {
         return this;
       }
 
+      private Object msg_ = "";
+      /**
+       * <code>string msg = 2;</code>
+       * @return The msg.
+       */
+      public String getMsg() {
+        Object ref = msg_;
+        if (!(ref instanceof String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          String s = bs.toStringUtf8();
+          msg_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
+      }
+      /**
+       * <code>string msg = 2;</code>
+       * @return The bytes for msg.
+       */
+      public com.google.protobuf.ByteString
+          getMsgBytes() {
+        Object ref = msg_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (String) ref);
+          msg_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string msg = 2;</code>
+       * @param value The msg to set.
+       * @return This builder for chaining.
+       */
+      public Builder setMsg(
+          String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        msg_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string msg = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearMsg() {
+        
+        msg_ = getDefaultInstance().getMsg();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string msg = 2;</code>
+       * @param value The bytes for msg to set.
+       * @return This builder for chaining.
+       */
+      public Builder setMsgBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        msg_ = value;
+        onChanged();
+        return this;
+      }
+
       private Object type_ = "";
       /**
-       * <code>string type = 2;</code>
+       * <code>string type = 3;</code>
        * @return The type.
        */
       public String getType() {
@@ -3450,7 +3900,7 @@ public final class SundialRegistryProto {
         }
       }
       /**
-       * <code>string type = 2;</code>
+       * <code>string type = 3;</code>
        * @return The bytes for type.
        */
       public com.google.protobuf.ByteString
@@ -3467,7 +3917,7 @@ public final class SundialRegistryProto {
         }
       }
       /**
-       * <code>string type = 2;</code>
+       * <code>string type = 3;</code>
        * @param value The type to set.
        * @return This builder for chaining.
        */
@@ -3482,7 +3932,7 @@ public final class SundialRegistryProto {
         return this;
       }
       /**
-       * <code>string type = 2;</code>
+       * <code>string type = 3;</code>
        * @return This builder for chaining.
        */
       public Builder clearType() {
@@ -3492,7 +3942,7 @@ public final class SundialRegistryProto {
         return this;
       }
       /**
-       * <code>string type = 2;</code>
+       * <code>string type = 3;</code>
        * @param value The bytes for type to set.
        * @return This builder for chaining.
        */
@@ -3510,7 +3960,7 @@ public final class SundialRegistryProto {
 
       private Object content_ = "";
       /**
-       * <code>string content = 3;</code>
+       * <code>string content = 4;</code>
        * @return The content.
        */
       public String getContent() {
@@ -3526,7 +3976,7 @@ public final class SundialRegistryProto {
         }
       }
       /**
-       * <code>string content = 3;</code>
+       * <code>string content = 4;</code>
        * @return The bytes for content.
        */
       public com.google.protobuf.ByteString
@@ -3543,7 +3993,7 @@ public final class SundialRegistryProto {
         }
       }
       /**
-       * <code>string content = 3;</code>
+       * <code>string content = 4;</code>
        * @param value The content to set.
        * @return This builder for chaining.
        */
@@ -3558,7 +4008,7 @@ public final class SundialRegistryProto {
         return this;
       }
       /**
-       * <code>string content = 3;</code>
+       * <code>string content = 4;</code>
        * @return This builder for chaining.
        */
       public Builder clearContent() {
@@ -3568,7 +4018,7 @@ public final class SundialRegistryProto {
         return this;
       }
       /**
-       * <code>string content = 3;</code>
+       * <code>string content = 4;</code>
        * @param value The bytes for content to set.
        * @return This builder for chaining.
        */
@@ -3665,22 +4115,23 @@ public final class SundialRegistryProto {
       descriptor;
   static {
     String[] descriptorData = {
-      "\n\025SundialRegistry.proto\022\007sundial\"O\n\016Publ" +
+      "\n\025SundialRegistry.proto\022\007sundial\"^\n\016Publ" +
       "ishCommand\022\016\n\006dataId\030\001 \001(\t\022\020\n\010hostName\030\002" +
-      " \001(\t\022\n\n\002ip\030\003 \001(\t\022\017\n\007appName\030\004 \001(\t\"Q\n\020Sub" +
-      "scribeCommand\022\016\n\006dataId\030\001 \001(\t\022\020\n\010hostNam" +
-      "e\030\002 \001(\t\022\n\n\002ip\030\003 \001(\t\022\017\n\007appName\030\004 \001(\t\"0\n\020" +
-      "HeartbeatCommand\022\020\n\010hostName\030\001 \001(\t\022\n\n\002ip" +
-      "\030\002 \001(\t\">\n\rRegistryReply\022\016\n\006status\030\001 \001(\t\022" +
-      "\014\n\004type\030\002 \001(\t\022\017\n\007content\030\003 \001(\t2\337\001\n\017Sundi" +
-      "alRegistry\022@\n\007publish\022\027.sundial.PublishC" +
-      "ommand\032\026.sundial.RegistryReply\"\000(\0010\001\022D\n\t" +
-      "subscribe\022\031.sundial.SubscribeCommand\032\026.s" +
-      "undial.RegistryReply\"\000(\0010\001\022D\n\theartbeat\022" +
-      "\031.sundial.HeartbeatCommand\032\026.sundial.Reg" +
-      "istryReply\"\000(\0010\001BB\n*cn.wegostack.sundial" +
-      ".registry.client.protoB\024SundialRegistryP" +
-      "rotob\006proto3"
+      " \001(\t\022\n\n\002ip\030\003 \001(\t\022\017\n\007appName\030\004 \001(\t\022\r\n\005env" +
+      "Id\030\005 \001(\t\"`\n\020SubscribeCommand\022\016\n\006dataId\030\001" +
+      " \001(\t\022\020\n\010hostName\030\002 \001(\t\022\n\n\002ip\030\003 \001(\t\022\017\n\007ap" +
+      "pName\030\004 \001(\t\022\r\n\005envId\030\005 \001(\t\"0\n\020HeartbeatC" +
+      "ommand\022\020\n\010hostName\030\001 \001(\t\022\n\n\002ip\030\002 \001(\t\"K\n\r" +
+      "RegistryReply\022\016\n\006status\030\001 \001(\t\022\013\n\003msg\030\002 \001" +
+      "(\t\022\014\n\004type\030\003 \001(\t\022\017\n\007content\030\004 \001(\t2\337\001\n\017Su" +
+      "ndialRegistry\022@\n\007publish\022\027.sundial.Publi" +
+      "shCommand\032\026.sundial.RegistryReply\"\000(\0010\001\022" +
+      "D\n\tsubscribe\022\031.sundial.SubscribeCommand\032" +
+      "\026.sundial.RegistryReply\"\000(\0010\001\022D\n\theartbe" +
+      "at\022\031.sundial.HeartbeatCommand\032\026.sundial." +
+      "RegistryReply\"\000(\0010\001BB\n*cn.wegostack.sund" +
+      "ial.registry.client.protoB\024SundialRegist" +
+      "ryProtob\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -3691,13 +4142,13 @@ public final class SundialRegistryProto {
     internal_static_sundial_PublishCommand_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_sundial_PublishCommand_descriptor,
-        new String[] { "DataId", "HostName", "Ip", "AppName", });
+        new String[] { "DataId", "HostName", "Ip", "AppName", "EnvId", });
     internal_static_sundial_SubscribeCommand_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_sundial_SubscribeCommand_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_sundial_SubscribeCommand_descriptor,
-        new String[] { "DataId", "HostName", "Ip", "AppName", });
+        new String[] { "DataId", "HostName", "Ip", "AppName", "EnvId", });
     internal_static_sundial_HeartbeatCommand_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_sundial_HeartbeatCommand_fieldAccessorTable = new
@@ -3709,7 +4160,7 @@ public final class SundialRegistryProto {
     internal_static_sundial_RegistryReply_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_sundial_RegistryReply_descriptor,
-        new String[] { "Status", "Type", "Content", });
+        new String[] { "Status", "Msg", "Type", "Content", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

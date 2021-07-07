@@ -41,13 +41,13 @@ public class DBRegistryStore {
             instanceDO.setHostname(instance.getHostname());
             instanceDO.setAppName(appName);
             instanceDO.setHeartbeat(new Date());
-            instanceRepository.save(instanceDO);
+            instanceRepository.saveAndFlush(instanceDO);
         } else {
             // update heartbeat
             InstanceDO instanceDB = instanceDOS.get(0);
             instanceDB.setStatus("RUNNING");
             instanceDB.setHeartbeat(new Date());
-            instanceRepository.save(instanceDB);
+            instanceRepository.saveAndFlush(instanceDB);
         }
     }
 

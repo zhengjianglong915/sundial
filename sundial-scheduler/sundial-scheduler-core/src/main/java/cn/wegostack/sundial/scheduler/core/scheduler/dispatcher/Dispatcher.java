@@ -79,14 +79,14 @@ public class Dispatcher implements IDispatcher {
 
     private List<Worker> discovery(JobItem jobItem) {
         String dataId = jobItem.getAppName();
-        List<Instance> publishers = this.discovery.discovery(dataId);
+        List<Publisher> publishers = this.discovery.discovery(dataId);
         if (CollectionUtils.isEmpty(publishers)) {
             throw new RuntimeException(String.format("The instance of %s does not found",
                     jobItem.getAppName()));
         }
 
         List<Worker> workerList = Lists.newArrayList();
-        for (Instance publisher : publishers) {
+        for (Publisher publisher : publishers) {
             Worker worker = new Worker();
             worker.setRemoteIp(publisher.getIp());
             worker.setOriginIp(publisher.getIp());

@@ -3,6 +3,7 @@ package cn.wegostack.sundial.worker.server;
 import cn.wegostack.sundial.common.utils.LogUtils;
 import cn.wegostack.sundial.registry.client.SundialRegistry;
 import cn.wegostack.sundial.registry.client.api.Registry;
+import cn.wegostack.sundial.registry.client.api.SubscribeDataListener;
 import cn.wegostack.sundial.registry.client.utils.DataIdUtils;
 import cn.wegostack.sundial.worker.processor.ExecuteTaskServiceImpl;
 import io.grpc.Server;
@@ -35,7 +36,7 @@ public class WorkerServer implements AutoCloseable {
         if (StringUtils.isEmpty(appName)) {
             throw new RuntimeException("The name of application does not found by spring.application.name.");
         }
-        String dataId = DataIdUtils.genDataId("Worker", appName);
+        String dataId = appName;
         registry.publish(dataId);
 
         LogUtils.info("[worker] Server started, listening on ", port);

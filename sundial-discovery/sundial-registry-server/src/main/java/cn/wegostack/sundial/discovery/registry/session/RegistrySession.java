@@ -5,9 +5,16 @@ import cn.wegostack.sundial.discovery.registry.model.Instance;
 import cn.wegostack.sundial.discovery.registry.model.RegistryClient;
 import cn.wegostack.sundial.discovery.registry.store.DBRegistryStore;
 import cn.wegostack.sundial.discovery.registry.store.RegistryStore;
+import cn.wegostack.sundial.registry.client.ReplyStatus;
+import cn.wegostack.sundial.registry.client.enums.ReplyType;
+import cn.wegostack.sundial.registry.client.model.DataInfo;
+import cn.wegostack.sundial.registry.client.model.Publisher;
+import cn.wegostack.sundial.registry.client.proto.SundialRegistryProto.*;
+import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import io.grpc.stub.StreamObserver;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,12 +70,6 @@ public class RegistrySession {
         }
 
         subscribers.add(subscriber);
-
-        Instance instance = new Instance();
-        instance.setAppName(subscriber.getAppName());
-        instance.setIp(subscriber.getIp());
-        instance.setHeartbeat(subscriber.getHeartbeat());
-        dbRegistryStore.registerPublisher(dataId, instance);
     }
 
 
@@ -86,8 +87,51 @@ public class RegistrySession {
         instance.setHeartbeat(publisher.getHeartbeat());
         instance.setHostname(publisher.getHostname());
 
-        //  RegistryStore.registryPublisher(dataId, instance);
         dbRegistryStore.registerPublisher(dataId, instance);
+
+        // subscribe
+        notify(dataId);
+    }
+
+    public void notify(String dataId) {
+        List<RegistryClient> registryClients = subscriberRegistrationMap.get(dataId);
+        if (CollectionUtils.isEmpty(registryClients)) {
+            return;
+        }
+
+        RegistryReply reply = getNotifyReply(dataId);
+        if (null == reply) {
+            return;
+        }
+
+        for (RegistryClient registryClient : registryClients) {
+            StreamObserver observer = registryClient.getObserver();
+            observer.onNext(reply);
+        }
+    }
+
+    public RegistryReply getNotifyReply(String dataId) {
+        List<Instance> instanceList = dbRegistryStore.queryPublisher(dataId);
+        if (CollectionUtils.isEmpty(instanceList)) {
+            return null;
+        }
+
+        DataInfo dataInfo = new DataInfo();
+        dataInfo.setDataId(dataId);
+        List<Publisher> publisherList = Lists.newArrayList();
+        for (Instance instance : instanceList) {
+            Publisher publisher = new Publisher();
+            publisher.setAppName(instance.getAppName());
+            publisher.setIp(instance.getIp());
+            publisherList.add(publisher);
+        }
+        dataInfo.setPublishers(publisherList);
+
+        return RegistryReply.newBuilder()
+                .setStatus(ReplyStatus.OK.name())
+                .setType(ReplyType.NOTIFY.name())
+                .setContent(JSON.toJSONString(dataInfo))
+                .build();
     }
 
     /**
@@ -121,7 +165,7 @@ public class RegistrySession {
         }
     }
 
-    private static boolean isExpired(long currentTime, Long heartbeat) {
+    private static boolean isExpired(Long currentTime, Long heartbeat) {
         long diff = currentTime - heartbeat;
         long seconds = diff / 1000;
         if (seconds >= EXPIRED_TIME) {

@@ -1,12 +1,11 @@
 package cn.wegostack.sundial.discovery.registry;
 
-import cn.wegostack.sundial.discovery.registry.processor.SundialRegistryService;
+import cn.wegostack.sundial.discovery.registry.processor.SundialRegistryProcessor;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
@@ -19,12 +18,12 @@ public class SundialRegistryServer implements AutoCloseable {
     private Server server;
 
     @Autowired
-    private SundialRegistryService registryService;
+    private SundialRegistryProcessor registryProcessor;
 
     public void start() throws IOException {
         int port = 8600;
         server = ServerBuilder.forPort(port)
-                .addService(registryService)
+                .addService(registryProcessor)
                 .build()
                 .start();
 

@@ -1,8 +1,7 @@
 package cn.wegostack.sundial.registry.client.api;
 
 
-
-import cn.wegostack.sundial.registry.client.model.DataInfo;
+import cn.wegostack.sundial.registry.client.model.Publisher;
 
 import java.util.List;
 
@@ -20,5 +19,5 @@ public interface SubscribeDataListener {
      * @param dataId
      * @param publishers
      */
-    void notify(String dataId, List<DataInfo> publishers);
+    void notify(String dataId, List<Publisher> publishers);
 }

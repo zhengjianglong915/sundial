@@ -1,7 +1,7 @@
 package cn.wegostack.sundial.scheduler.core.discovery;
 
 
-import cn.wegostack.sundial.discovery.registry.model.Instance;
+import cn.wegostack.sundial.registry.client.model.Publisher;
 
 import java.util.List;
 
@@ -11,5 +11,5 @@ import java.util.List;
  */
 public interface IDiscovery {
 
-    List<Instance> discovery(String appName);
+    List<Publisher> discovery(String dataId);
 }

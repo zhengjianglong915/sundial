@@ -15,6 +15,7 @@ message PublishCommand {
     string hostName = 2;
     string ip = 3;
     string appName = 4;
+    string envId = 5;
 }
 
 message SubscribeCommand {
@@ -22,6 +23,7 @@ message SubscribeCommand {
     string hostName = 2;
     string ip = 3;
     string appName = 4;
+    string envId = 5;
 }
 
 message HeartbeatCommand {
@@ -31,6 +33,7 @@ message HeartbeatCommand {
 
 message RegistryReply {
     string status = 1;
-    string type = 2;
-    string content = 3;
+    string msg = 2;
+    string type = 3;
+    string content = 4;
 }

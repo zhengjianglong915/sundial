@@ -3,12 +3,15 @@ package cn.wegostack.sundial.registry.client;
 
 import cn.wegostack.sundial.registry.client.api.Registry;
 import cn.wegostack.sundial.registry.client.api.SubscribeDataListener;
+import cn.wegostack.sundial.registry.client.enums.ReplyType;
+import cn.wegostack.sundial.registry.client.model.DataInfo;
 import cn.wegostack.sundial.registry.client.model.Publisher;
 import cn.wegostack.sundial.registry.client.proto.SundialRegistryGrpc;
 import cn.wegostack.sundial.registry.client.proto.SundialRegistryProto.PublishCommand;
 import cn.wegostack.sundial.registry.client.proto.SundialRegistryProto.RegistryReply;
 import cn.wegostack.sundial.registry.client.proto.SundialRegistryProto.SubscribeCommand;
 import cn.wegostack.sundial.registry.client.utils.HostUtils;
+import com.alibaba.fastjson.JSON;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
@@ -26,9 +29,9 @@ public class SundialRegistry implements Registry {
 
     private final static int REGISTRY_PORT = 8600;
 
-    private Map<String, List<Publisher>> publisherMap = new HashMap<>();
+    private static Map<String, List<Publisher>> publisherMap = new HashMap<>();
 
-    private Map<String, SubscribeDataListener> subscribeMap = new HashMap<>();
+    private static Map<String, SubscribeDataListener> subscribeMap = new HashMap<>();
 
     private String registryEndpoint;
 
@@ -69,6 +72,7 @@ public class SundialRegistry implements Registry {
         publishers.add(publisher);
 
         PublishCommand command = PublishCommand.newBuilder()
+                .setDataId(dataId)
                 .setAppName(appName)
                 .setIp(HostUtils.getHostIp())
                 .setHostName(HostUtils.getHostname())
@@ -76,8 +80,7 @@ public class SundialRegistry implements Registry {
 
         StreamObserver<PublishCommand> publish = registryStub.publish(responseObserver);
         publish.onNext(command);
-        publish.onCompleted();
-        return false;
+        return true;
     }
 
     @Override
@@ -93,7 +96,6 @@ public class SundialRegistry implements Registry {
         }
         subscribeMap.put(dataId, subscribeDataListener);
 
-
         SubscribeCommand command = SubscribeCommand.newBuilder()
                 .setDataId(dataId)
                 .setIp(HostUtils.getHostIp())
@@ -101,7 +103,7 @@ public class SundialRegistry implements Registry {
                 .build();
         StreamObserver<SubscribeCommand> subscribe = registryStub.subscribe(responseObserver);
         subscribe.onNext(command);
-        return false;
+        return true;
     }
 
     @Override
@@ -112,18 +114,29 @@ public class SundialRegistry implements Registry {
     private StreamObserver<RegistryReply> newResponseObserver() {
         return new StreamObserver<RegistryReply>() {
             @Override
-            public void onNext(RegistryReply registryReply) {
-                System.out.println(registryReply.getContent());
+            public void onNext(RegistryReply reply) {
+                System.out.println("=================");
+                System.out.println(reply.getType());
+                System.out.println(reply.getContent());
+                System.out.println("=================");
+                String type = reply.getType();
+                if (ReplyType.NOTIFY.name().equals(type)) {
+                    DataInfo dataInfo = JSON.parseObject(reply.getContent(), DataInfo.class);
+                    String dataId = dataInfo.getDataId();
+                    SubscribeDataListener listener = subscribeMap.get(dataId);
+                    if (null != listener) {
+                        List<Publisher> publishers = dataInfo.getPublishers();
+                        listener.notify(dataId, publishers);
+                    }
+                }
             }
 
             @Override
             public void onError(Throwable throwable) {
-
             }
 
             @Override
             public void onCompleted() {
-
             }
         };
     }
