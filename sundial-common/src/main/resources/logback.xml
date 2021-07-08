@@ -1,31 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="false" scan="false" scanPeriod="60 seconds">
-    <property name="LOG_HOME" value="./logs/sundial"/>
-    <property name="appName" value="sundial"/>
+
+    <springProperty scope="context" name="logging.path" source="logging.file.path"/>
+    <springProperty scope="context" name="logging.level" source="logging.level.root"/>
+    <springProperty scope="context" name="appName" source="spring.application.name"/>
+
     <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
-        <layout class="ch.qos.logback.classic.PatternLayout">
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} - [%thread] - %-5level - %logger{50} - %msg%n</pattern>
+        <layout class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{HH:mm:ss.SSS} %-5level %logger{80} - %msg%n</pattern>
         </layout>
     </appender>
 
-    <appender name="appLogAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_HOME}/common-default.log</file>
+    <appender name="ROOT-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <append>true</append>
+        <filter class="cn.qos.logback.classic.filter.LevelFilter">
+            <level>${logging.level}</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <file>${logging.path}/${appName}/common-default.log</file>
+
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_HOME}/common-default.log.%d{yyyy-MM-dd}.%i</fileNamePattern>
+            <fileNamePattern>${logging.path}/${appName}/common-default.log.%d{yyyy-MM-dd}.%i</fileNamePattern>
             <MaxHistory>30</MaxHistory>
-            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <MaxFileSize>100MB</MaxFileSize>
-            </timeBasedFileNamingAndTriggeringPolicy>
+<!--            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">-->
+<!--                <MaxFileSize>100MB</MaxFileSize>-->
+<!--            </timeBasedFileNamingAndTriggeringPolicy>-->
         </rollingPolicy>
 
         <layout class="ch.qos.logback.classic.PatternLayout">
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [ %thread ] - [ %-5level ] [ %logger{50} : %line ] - %msg%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] - %-5level [%logger{50}:%line] - %msg%n</pattern>
+            <charset>UTF-8</charset>
         </layout>
     </appender>
 
-    <logger name="cn.wegostack.sundial" level="info"/>
-    <root level="INFO">
-        <appender-ref ref="stdout"/>
-        <appender-ref ref="appLogAppender"/>
+
+    <root level="${logging.level}">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="ROOT-APPENDER"/>
     </root>
 </configuration>
