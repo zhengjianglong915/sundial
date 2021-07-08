@@ -14,8 +14,8 @@ import cn.wegostack.sundial.scheduler.core.loadbalance.ILoadBalance;
 import cn.wegostack.sundial.scheduler.core.loadbalance.LoadBalanceContext;
 import cn.wegostack.sundial.scheduler.core.router.IRouter;
 import cn.wegostack.sundial.scheduler.core.router.RouterContext;
+import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
-import org.assertj.core.util.Lists;
 
 import java.util.List;
 import java.util.Set;

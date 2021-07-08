@@ -5,39 +5,31 @@
     <parent>
         <artifactId>sundial</artifactId>
         <groupId>cn.wegostack</groupId>
-        <version>0.1.0</version>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>cn.wegostack</groupId>
     <artifactId>sundial-worker</artifactId>
-    <version>0.1.0</version>
     <name>sundial-worker</name>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>1.8</java.version>
-    </properties>
 
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>cn.wegostack</groupId>
             <artifactId>sundial-common</artifactId>
-            <version>0.1.0</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>cn.wegostack</groupId>
             <artifactId>sundial-registry-client</artifactId>
-            <version>0.1.0</version>
         </dependency>
     </dependencies>
 
@@ -51,13 +43,13 @@
                         <source>${java.version}</source>
                         <target>${java.version}</target>
                     </configuration>
-                    <version>3.3</version>
+                    <version>${maven-compiler-plugin.version}</version>
                 </plugin>
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>2.21.0</version>
+                    <version>${maven-surefire-plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>

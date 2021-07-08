@@ -6,40 +6,23 @@
     <parent>
         <groupId>cn.wegostack</groupId>
         <artifactId>sundial-scheduler</artifactId>
-        <version>0.1.0</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <groupId>cn.wegostack</groupId>
     <artifactId>sundail-scheduler-dal</artifactId>
-    <version>0.1.0</version>
-
     <name>sundial-scheduler-dal</name>
-    <!-- FIXME change it to the project's website -->
-    <url>http://www.example.com</url>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>1.8</java.version>
-    </properties>
 
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.20</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.20</version>
             <scope>compile</scope>
         </dependency>
 
@@ -47,19 +30,17 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-            <version>2.5.1</version>
+<!--            <version>2.5.1</version>-->
         </dependency>
 
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
-            <version>1.1.21</version>
         </dependency>
 
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.25</version>
             <scope>runtime</scope>
         </dependency>
     </dependencies>
@@ -74,13 +55,13 @@
                         <source>${java.version}</source>
                         <target>${java.version}</target>
                     </configuration>
-                    <version>3.3</version>
+                    <version>${maven-compiler-plugin.version}</version>
                 </plugin>
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>2.21.0</version>
+                    <version>${maven-surefire-plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>

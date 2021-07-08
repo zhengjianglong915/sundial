@@ -1,24 +1,11 @@
 package cn.wegostack.sundial.registry.client.proto;
 
 import static io.grpc.MethodDescriptor.generateFullMethodName;
-import static io.grpc.stub.ClientCalls.asyncBidiStreamingCall;
-import static io.grpc.stub.ClientCalls.asyncClientStreamingCall;
-import static io.grpc.stub.ClientCalls.asyncServerStreamingCall;
-import static io.grpc.stub.ClientCalls.asyncUnaryCall;
-import static io.grpc.stub.ClientCalls.blockingServerStreamingCall;
-import static io.grpc.stub.ClientCalls.blockingUnaryCall;
-import static io.grpc.stub.ClientCalls.futureUnaryCall;
-import static io.grpc.stub.ServerCalls.asyncBidiStreamingCall;
-import static io.grpc.stub.ServerCalls.asyncClientStreamingCall;
-import static io.grpc.stub.ServerCalls.asyncServerStreamingCall;
-import static io.grpc.stub.ServerCalls.asyncUnaryCall;
-import static io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall;
-import static io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall;
 
 /**
  */
 @javax.annotation.Generated(
-    value = "by gRPC proto compiler (version 1.27.0)",
+    value = "by gRPC proto compiler (version 1.38.1)",
     comments = "Source: SundialRegistry.proto")
 public final class SundialRegistryGrpc {
 
@@ -172,42 +159,42 @@ public final class SundialRegistryGrpc {
      */
     public io.grpc.stub.StreamObserver<SundialRegistryProto.PublishCommand> publish(
         io.grpc.stub.StreamObserver<SundialRegistryProto.RegistryReply> responseObserver) {
-      return asyncUnimplementedStreamingCall(getPublishMethod(), responseObserver);
+      return io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall(getPublishMethod(), responseObserver);
     }
 
     /**
      */
     public io.grpc.stub.StreamObserver<SundialRegistryProto.SubscribeCommand> subscribe(
         io.grpc.stub.StreamObserver<SundialRegistryProto.RegistryReply> responseObserver) {
-      return asyncUnimplementedStreamingCall(getSubscribeMethod(), responseObserver);
+      return io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall(getSubscribeMethod(), responseObserver);
     }
 
     /**
      */
     public io.grpc.stub.StreamObserver<SundialRegistryProto.HeartbeatCommand> heartbeat(
         io.grpc.stub.StreamObserver<SundialRegistryProto.RegistryReply> responseObserver) {
-      return asyncUnimplementedStreamingCall(getHeartbeatMethod(), responseObserver);
+      return io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall(getHeartbeatMethod(), responseObserver);
     }
 
     @Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
             getPublishMethod(),
-            asyncBidiStreamingCall(
+            io.grpc.stub.ServerCalls.asyncBidiStreamingCall(
               new MethodHandlers<
                 SundialRegistryProto.PublishCommand,
                 SundialRegistryProto.RegistryReply>(
                   this, METHODID_PUBLISH)))
           .addMethod(
             getSubscribeMethod(),
-            asyncBidiStreamingCall(
+            io.grpc.stub.ServerCalls.asyncBidiStreamingCall(
               new MethodHandlers<
                 SundialRegistryProto.SubscribeCommand,
                 SundialRegistryProto.RegistryReply>(
                   this, METHODID_SUBSCRIBE)))
           .addMethod(
             getHeartbeatMethod(),
-            asyncBidiStreamingCall(
+            io.grpc.stub.ServerCalls.asyncBidiStreamingCall(
               new MethodHandlers<
                 SundialRegistryProto.HeartbeatCommand,
                 SundialRegistryProto.RegistryReply>(
@@ -234,7 +221,7 @@ public final class SundialRegistryGrpc {
      */
     public io.grpc.stub.StreamObserver<SundialRegistryProto.PublishCommand> publish(
         io.grpc.stub.StreamObserver<SundialRegistryProto.RegistryReply> responseObserver) {
-      return asyncBidiStreamingCall(
+      return io.grpc.stub.ClientCalls.asyncBidiStreamingCall(
           getChannel().newCall(getPublishMethod(), getCallOptions()), responseObserver);
     }
 
@@ -242,7 +229,7 @@ public final class SundialRegistryGrpc {
      */
     public io.grpc.stub.StreamObserver<SundialRegistryProto.SubscribeCommand> subscribe(
         io.grpc.stub.StreamObserver<SundialRegistryProto.RegistryReply> responseObserver) {
-      return asyncBidiStreamingCall(
+      return io.grpc.stub.ClientCalls.asyncBidiStreamingCall(
           getChannel().newCall(getSubscribeMethod(), getCallOptions()), responseObserver);
     }
 
@@ -250,7 +237,7 @@ public final class SundialRegistryGrpc {
      */
     public io.grpc.stub.StreamObserver<SundialRegistryProto.HeartbeatCommand> heartbeat(
         io.grpc.stub.StreamObserver<SundialRegistryProto.RegistryReply> responseObserver) {
-      return asyncBidiStreamingCall(
+      return io.grpc.stub.ClientCalls.asyncBidiStreamingCall(
           getChannel().newCall(getHeartbeatMethod(), getCallOptions()), responseObserver);
     }
   }

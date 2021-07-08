@@ -16,7 +16,7 @@ import cn.wegostack.sundial.scheduler.core.scheduler.dispatcher.IDispatcher;
 import cn.wegostack.sundial.scheduler.core.trigger.queue.TriggerEvent;
 import cn.wegostack.sundial.scheduler.core.trigger.queue.TriggerEventQueue;
 import cn.wegostack.sundial.scheduler.core.trigger.queue.TriggerEventQueueFactory;
-import org.assertj.core.util.Lists;
+import com.google.common.collect.Lists;
 
 import java.util.Date;
 import java.util.List;

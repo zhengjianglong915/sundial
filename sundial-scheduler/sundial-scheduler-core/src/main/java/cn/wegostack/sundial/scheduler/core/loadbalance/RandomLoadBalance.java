@@ -2,8 +2,8 @@ package cn.wegostack.sundial.scheduler.core.loadbalance;
 
 import cn.wegostack.sundial.common.enums.LoadBalanceType;
 import cn.wegostack.sundial.common.model.Worker;
+import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
-import org.assertj.core.util.Lists;
 
 import java.util.Collections;
 import java.util.List;
