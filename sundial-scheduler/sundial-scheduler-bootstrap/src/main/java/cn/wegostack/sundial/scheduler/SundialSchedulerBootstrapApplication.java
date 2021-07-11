@@ -1,4 +1,4 @@
-package cn.wegostack.sundial.scheduler.bootstrap;
+package cn.wegostack.sundial.scheduler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

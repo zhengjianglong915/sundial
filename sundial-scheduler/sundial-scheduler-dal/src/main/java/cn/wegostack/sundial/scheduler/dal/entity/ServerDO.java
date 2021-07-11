@@ -10,14 +10,13 @@ import java.util.Date;
 
 /**
  * @author zhengjianglong
- * @since 2021-07-04
+ * @since 2021-07-10
  */
 @Data
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "t_instance")
-public class InstanceDO {
-
+@Table(name = "t_server")
+public class ServerDO {
     @Id
     @GeneratedValue
     private Long id;
@@ -26,8 +25,6 @@ public class InstanceDO {
     private String ip;
 
     private String hostname;
-
-    private String appName;
 
     /**
      * instance status:
@@ -39,11 +36,7 @@ public class InstanceDO {
 
     private Date heartbeat;
 
-    private String region;
-
-    private String dataCenter;
-
-    private String cell;
+    private String cluster;
 
     @CreatedDate
     @Column(updatable = false, nullable = false)

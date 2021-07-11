@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  */
 @Configuration
 @EnableJpaAuditing
-@EnableJpaRepositories(basePackages = {"cn.wegostack.sundial.scheduler.dal.dao"})
+@EnableJpaRepositories(basePackages = {"cn.wegostack.sundial.scheduler.dal.repository"})
 @EntityScan(basePackages = {"cn.wegostack.sundial.scheduler.dal.entity"})
 public class DaoConfiguration {
 }

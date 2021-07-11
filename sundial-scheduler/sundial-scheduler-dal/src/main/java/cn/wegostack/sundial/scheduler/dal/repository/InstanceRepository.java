@@ -1,4 +1,4 @@
-package cn.wegostack.sundial.scheduler.dal.dao;
+package cn.wegostack.sundial.scheduler.dal.repository;
 
 import cn.wegostack.sundial.scheduler.dal.entity.InstanceDO;
 import org.springframework.data.jpa.repository.JpaRepository;

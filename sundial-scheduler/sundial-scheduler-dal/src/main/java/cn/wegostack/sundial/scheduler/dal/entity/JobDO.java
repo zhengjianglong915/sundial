@@ -1,9 +1,12 @@
 package cn.wegostack.sundial.scheduler.dal.entity;
 
 import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * @author zhengjianglong
@@ -19,6 +22,9 @@ public class JobDO {
     @GeneratedValue
     private Long id;
 
+    @Column(length = 20)
+    private String jobId;
+
     @Column(length = 50)
     private String name;
 
@@ -30,5 +36,12 @@ public class JobDO {
 
     @Column(length = 50)
     private String triggerExp;
-    
+
+    @CreatedDate
+    @Column(updatable = false, nullable = false)
+    private Date createTime;
+
+    @LastModifiedDate
+    @Column(nullable = false)
+    private Date modifyTime;
 }

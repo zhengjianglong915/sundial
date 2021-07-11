@@ -1,7 +1,7 @@
 package cn.wegostack.sundial.discovery.registry.store;
 
 import cn.wegostack.sundial.discovery.registry.model.Instance;
-import cn.wegostack.sundial.scheduler.dal.dao.InstanceRepository;
+import cn.wegostack.sundial.scheduler.dal.repository.InstanceRepository;
 import cn.wegostack.sundial.scheduler.dal.entity.InstanceDO;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
