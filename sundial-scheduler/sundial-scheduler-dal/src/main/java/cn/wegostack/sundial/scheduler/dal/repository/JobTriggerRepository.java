@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
+
 /**
  * @author zhengjianglong
  * @since 2021-07-04
@@ -21,12 +23,13 @@ public interface JobTriggerRepository extends JpaRepository<JobTriggerDO, Long> 
      * @param slot
      * @return
      */
+    @Transactional
     @Modifying(flushAutomatically = true)
     @Query(value = "update t_job_trigger set load_status = :loadStatus, load_server = :loadServer"
             + " where slot = :slot and load_server != :loadServer",
             nativeQuery = true)
     int updateLoadServerBySlot(@Param("loadStatus") String loadStatus,
-                               @Param("loadStatus") String loadServer,
+                               @Param("loadServer") String loadServer,
                                @Param("slot") Integer slot);
 
 }

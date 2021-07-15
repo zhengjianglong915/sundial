@@ -1,36 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="false" scan="false" scanPeriod="60 seconds">
-
     <springProperty scope="context" name="logging.path" source="logging.file.path"/>
     <springProperty scope="context" name="logging.level" source="logging.level.root"/>
     <springProperty scope="context" name="appName" source="spring.application.name"/>
-
-    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
-        <layout class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>%d{HH:mm:ss.SSS} %-5level %logger{80} - %msg%n</pattern>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} - [%thread] - %-5level - %logger{50} - %msg%n</pattern>
         </layout>
     </appender>
 
     <appender name="ROOT-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <append>true</append>
-        <filter class="cn.qos.logback.classic.filter.LevelFilter">
-            <level>${logging.level}</level>
-            <onMatch>ACCEPT</onMatch>
-            <onMismatch>DENY</onMismatch>
-        </filter>
         <file>${logging.path}/${appName}/common-default.log</file>
-
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${logging.path}/${appName}/common-default.log.%d{yyyy-MM-dd}.%i</fileNamePattern>
             <MaxHistory>30</MaxHistory>
-<!--            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">-->
-<!--                <MaxFileSize>100MB</MaxFileSize>-->
-<!--            </timeBasedFileNamingAndTriggeringPolicy>-->
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <MaxFileSize>100MB</MaxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
 
         <layout class="ch.qos.logback.classic.PatternLayout">
             <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] - %-5level [%logger{50}:%line] - %msg%n</pattern>
-            <charset>UTF-8</charset>
         </layout>
     </appender>
 

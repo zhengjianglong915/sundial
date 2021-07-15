@@ -33,11 +33,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-logging</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>cn.wegostack</groupId>
             <artifactId>sundial-scheduler-core</artifactId>
         </dependency>
@@ -50,10 +45,6 @@
         <dependency>
             <groupId>cn.wegostack</groupId>
             <artifactId>sundial-registry-server</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>cn.wegostack</groupId>
-            <artifactId>sundial-common</artifactId>
         </dependency>
     </dependencies>
 
