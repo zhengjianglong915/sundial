@@ -17,8 +17,8 @@ public class Generator {
      */
     public static String genJobId() {
         // todo
-        String random = RandomStringUtils.random(8);
-        return "JB-" + random;
+        String random = RandomStringUtils.randomAlphabetic(8);
+        return "J-" + random;
     }
 
     /**

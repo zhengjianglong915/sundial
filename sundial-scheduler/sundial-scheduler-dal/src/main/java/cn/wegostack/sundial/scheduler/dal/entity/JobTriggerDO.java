@@ -47,9 +47,6 @@ public class JobTriggerDO {
     private String loadStatus;
 
     @Column
-    private String loadTime;
-
-    @Column
     private String loadServer;
 
     /**
@@ -57,6 +54,9 @@ public class JobTriggerDO {
      */
     @Column
     private Integer slot;
+
+    @Column
+    private Date loadTime;
 
     @CreatedDate
     @Column(updatable = false, nullable = false)

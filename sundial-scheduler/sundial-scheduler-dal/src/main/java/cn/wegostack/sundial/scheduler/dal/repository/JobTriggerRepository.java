@@ -26,7 +26,7 @@ public interface JobTriggerRepository extends JpaRepository<JobTriggerDO, Long> 
     @Transactional
     @Modifying(flushAutomatically = true)
     @Query(value = "update t_job_trigger set load_status = :loadStatus, load_server = :loadServer"
-            + " where slot = :slot and load_server != :loadServer",
+            + " where slot = :slot",
             nativeQuery = true)
     int updateLoadServerBySlot(@Param("loadStatus") String loadStatus,
                                @Param("loadServer") String loadServer,

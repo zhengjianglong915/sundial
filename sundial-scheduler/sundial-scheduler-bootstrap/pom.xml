@@ -46,6 +46,12 @@
             <groupId>cn.wegostack</groupId>
             <artifactId>sundial-registry-server</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>

@@ -91,6 +91,7 @@ public class SundialCluster implements Cluster {
                         // todo
                         Set<Integer> allSlots = SlotManager.getAllSlots();
                         for (Integer slot : allSlots) {
+                            // todo use cache
                             triggerRepository.updateLoadServerBySlot("INIT", LocalServer.getIp(), slot);
                         }
                     }

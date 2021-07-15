@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="false" scan="false" scanPeriod="60 seconds">
-    <springProperty scope="context" name="logging.path" source="logging.file.path"/>
+    <springProperty scope="context" name="LOG_PATH" source="logging.file.path"/>
     <springProperty scope="context" name="logging.level" source="logging.level.root"/>
     <springProperty scope="context" name="appName" source="spring.application.name"/>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
@@ -11,7 +11,7 @@
 
     <appender name="ROOT-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <append>true</append>
-        <file>${logging.path}/${appName}/common-default.log</file>
+        <file>${LOG_PATH}/${appName}/common-default.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${logging.path}/${appName}/common-default.log.%d{yyyy-MM-dd}.%i</fileNamePattern>
             <MaxHistory>30</MaxHistory>

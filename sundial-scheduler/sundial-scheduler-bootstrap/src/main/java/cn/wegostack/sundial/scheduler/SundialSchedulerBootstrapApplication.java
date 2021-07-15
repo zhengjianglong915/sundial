@@ -11,7 +11,6 @@ import org.springframework.context.annotation.ComponentScan;
 public class SundialSchedulerBootstrapApplication {
     private static Logger LOGGER = LoggerFactory.getLogger(SundialSchedulerBootstrapApplication.class);
 
-
     public static void main(String[] args) {
         try {
             SpringApplication.run(SundialSchedulerBootstrapApplication.class, args);

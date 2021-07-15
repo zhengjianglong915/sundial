@@ -27,20 +27,28 @@ public class JobRestController {
     @Autowired
     private JobRepository jobRepository;
 
+    /**
+     * create  job
+     *
+     * @param request
+     * @return
+     */
     @PostMapping(path = "/job")
-    public Result addJob(@RequestBody AddJobRequest request) {
-        Result result = Result.success();
+    public Result<String> addJob(@RequestBody AddJobRequest request) {
+        Result<String> result = Result.success();
         if (StringUtils.isEmpty(request.getAppName())) {
-            throw new BadRequestException();
+            throw new BadRequestException("The appName should not be empty.");
         }
+
         JobDO jobDO = new JobDO();
         BeanUtils.copyProperties(request, jobDO);
 
         String jobId = Generator.genJobId();
         jobDO.setJobId(jobId);
-        int slot = jobId.hashCode() % CommonConstants.SLOT_COUNT;
+        int slot = Math.abs(jobId.hashCode()) % CommonConstants.SLOT_COUNT;
         jobDO.setSlot(slot);
         jobRepository.save(jobDO);
+        result.setData(jobId);
         return result;
     }
 }

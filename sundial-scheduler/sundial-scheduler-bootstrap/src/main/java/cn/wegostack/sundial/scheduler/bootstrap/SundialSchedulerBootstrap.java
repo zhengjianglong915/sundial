@@ -22,12 +22,16 @@ public class SundialSchedulerBootstrap implements Closeable {
 
     @PostConstruct
     public void start() {
-        String cluster = System.getProperty("sundial.scheduler.cluster", "default");
-        sundialCluster.join(cluster);
-
         // set local info
         LocalServer.setIp(HostUtils.getHostIp());
+        String cluster = System.getProperty("sundial.scheduler.cluster", "default");
         LocalServer.setCluster(cluster);
+
+        // join cluster of scheduler
+        sundialCluster.join(cluster);
+
+
+        LocalServer.setIsReady(true);
     }
 
     @Override

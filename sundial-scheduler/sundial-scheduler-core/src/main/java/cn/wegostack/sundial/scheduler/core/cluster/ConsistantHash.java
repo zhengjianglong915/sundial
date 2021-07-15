@@ -68,15 +68,16 @@ public class ConsistantHash {
             if (!isInited.get() || CollectionUtils.isEmpty(serverSet)) {
                 return null;
             }
+            int idx = hashCode % items.length;
 
-            int idx = Arrays.binarySearch(items, hashCode);
-            if (idx < 0) {
-                idx = Math.abs(idx) - 1;
-            }
-
-            if (idx >= items.length) {
-                idx = items.length - 1;
-            }
+//            int idx = Arrays.binarySearch(items, hashCode);
+//            if (idx < 0) {
+//                idx = Math.abs(idx) - 1;
+//            }
+//
+//            if (idx >= items.length) {
+//                idx = items.length - 1;
+//            }
             return items[idx].server;
         }
     }
