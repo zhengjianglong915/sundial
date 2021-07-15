@@ -26,7 +26,7 @@ public interface ServerRepository extends JpaRepository<ServerDO, Long> {
      * @return
      */
     @Transactional
-    @Modifying
+    @Modifying(flushAutomatically = true)
     @Query(value = "update t_server set heartbeat = CURRENT_TIMESTAMP where cluster = :cluster and ip = :localIp",
             nativeQuery = true)
     int updateHeartBeat(@Param("cluster") String cluster, @Param("localIp") String localIp);

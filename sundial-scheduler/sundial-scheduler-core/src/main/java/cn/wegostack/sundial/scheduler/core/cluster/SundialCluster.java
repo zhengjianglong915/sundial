@@ -2,7 +2,9 @@ package cn.wegostack.sundial.scheduler.core.cluster;
 
 import cn.wegostack.sundial.common.threadpool.ScheduledService;
 import cn.wegostack.sundial.common.utils.HostUtils;
+import cn.wegostack.sundial.common.utils.LocalServer;
 import cn.wegostack.sundial.scheduler.dal.entity.ServerDO;
+import cn.wegostack.sundial.scheduler.dal.repository.JobTriggerRepository;
 import cn.wegostack.sundial.scheduler.dal.service.ServerService;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
@@ -32,6 +34,9 @@ public class SundialCluster implements Cluster {
 
     @Autowired
     private ServerService serverService;
+
+    @Autowired
+    private JobTriggerRepository triggerRepository;
 
     public SundialCluster() {
 
@@ -75,8 +80,19 @@ public class SundialCluster implements Cluster {
                     List<ServerDO> serverList = serverService.getRunningServers(cluster, timeoutTime);
                     boolean isChange = isServerChange(serverList);
                     if (isChange) {
-                        Set<String> serverSet = serverList.stream().map(ServerDO::getIp).collect(Collectors.toSet());
+                        Set<String> serverSet = serverList.stream().map(ServerDO::getIp)
+                                .collect(Collectors.toSet());
+                        LOGGER.info("[Cluster] cluster server is change. new server list:{}",
+                                JSON.toJSONString(serverSet));
                         ConsistantHash.load(serverSet);
+                        SlotManager.refresh();
+                        LOGGER.info("[Cluster] refresh slot");
+
+                        // todo
+                        Set<Integer> allSlots = SlotManager.getAllSlots();
+                        for (Integer slot : allSlots) {
+                            triggerRepository.updateLoadServerBySlot("INIT", LocalServer.getIp(), slot);
+                        }
                     }
 
                     LOGGER.debug("[Cluster] running server {}", JSON.toJSONString(serverList));

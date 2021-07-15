@@ -1,5 +1,7 @@
 package cn.wegostack.sundial.scheduler.core.scheduler;
 
+import cn.wegostack.sundial.common.model.JobMeta;
+import cn.wegostack.sundial.common.model.JobTrigger;
 import cn.wegostack.sundial.common.model.ScheduleContext;
 import cn.wegostack.sundial.common.utils.DateUtils;
 import cn.wegostack.sundial.common.utils.LogUtils;
@@ -53,13 +55,15 @@ public class SundialScheduler {
                 IDispatcher dispatcher = new Dispatcher(context, discovery, routers, loadBalance, invoker);
                 executorService.submit(dispatcher);
 
+                JobTrigger jobTrigger = event.getJobTrigger();
+                JobMeta jobMeta = jobTrigger.getJobMeta();
                 // log event
                 long scheduleDelay = DateUtils.subtract(context.getSchedulerTime(),
                         context.getExpTriggerTime());
                 long triggerDelay = DateUtils.subtract(context.getSchedulerTime(),
                         context.getTriggerTime());
                 LogUtils.info("[{}] {} was scheduled,{},{}", context.getTriggerId(),
-                        event.getJobItem().getJobId(), scheduleDelay, triggerDelay);
+                        jobMeta.getJobId(), scheduleDelay, triggerDelay);
             } catch (Throwable e) {
                 LogUtils.error("[scheduler] The exception is throw when scheduler job.", e);
             }
@@ -68,7 +72,7 @@ public class SundialScheduler {
 
     private ScheduleContext buildContext(TriggerEvent event) {
         ScheduleContext context = new ScheduleContext();
-        context.setJobItem(event.getJobItem());
+        context.setJobTrigger(event.getJobTrigger());
         context.setTriggerId(event.getTriggerId());
         context.setTriggerTime(event.getTriggerTime());
         context.setSchedulerTime(new Date());

@@ -1,8 +1,8 @@
 package cn.wegostack.sundial.scheduler.dal.sundial.scheduler.core.trigger.timing;
 
-import cn.wegostack.sundial.common.model.JobItem;
+import cn.wegostack.sundial.common.model.JobTrigger;
 import cn.wegostack.sundial.scheduler.core.scheduler.SundialScheduler;
-import cn.wegostack.sundial.scheduler.core.trigger.timing.TimingTrigger;
+import cn.wegostack.sundial.scheduler.core.trigger.timing.TimingTriggerManager;
 import junit.framework.TestCase;
 import org.junit.Test;
 
@@ -14,12 +14,11 @@ public class TimingTriggerTest extends TestCase {
 
     @Test
     public void testSchedule() throws Exception {
-        TimingTrigger trigger = new TimingTrigger();
-        trigger.init();
+        TimingTriggerManager trigger = new TimingTriggerManager();
 
-        JobItem jobItem = new JobItem();
-        jobItem.setJobId("JB-adaremwe");
-        jobItem.setTriggerExp("2021-06-24 09:26:00");
+        JobTrigger jobItem = new JobTrigger();
+//        jobItem.setJobId("JB-adaremwe");
+//        jobItem.setTriggerExp("2021-06-24 09:26:00");
         trigger.add(jobItem);
 
 //        JobItem jobItem2 = new JobItem();

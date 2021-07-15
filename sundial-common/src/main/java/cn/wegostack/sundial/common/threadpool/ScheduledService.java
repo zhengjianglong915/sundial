@@ -42,7 +42,7 @@ public class ScheduledService {
                     new NamedThreadFactory(threadName));
         }
 
-        ScheduledFuture future = scheduledExecutorService.scheduleWithFixedDelay(runnable, initialDelay, period, unit);
+        scheduledExecutorService.scheduleWithFixedDelay(runnable, initialDelay, period, unit);
         if (future != null) {
             this.future = future;
             started = true;
@@ -51,7 +51,6 @@ public class ScheduledService {
         }
         return this;
     }
-
 
     public synchronized void stop() {
         if (!started) {

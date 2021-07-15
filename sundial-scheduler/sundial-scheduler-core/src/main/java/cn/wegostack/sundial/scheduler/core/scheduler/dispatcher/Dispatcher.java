@@ -3,7 +3,8 @@ package cn.wegostack.sundial.scheduler.core.scheduler.dispatcher;
 
 
 import cn.wegostack.sundial.common.enums.JobTypeEnums;
-import cn.wegostack.sundial.common.model.JobItem;
+import cn.wegostack.sundial.common.model.JobMeta;
+import cn.wegostack.sundial.common.model.JobTrigger;
 import cn.wegostack.sundial.common.model.ScheduleContext;
 import cn.wegostack.sundial.common.model.Worker;
 import cn.wegostack.sundial.common.utils.LogUtils;
@@ -54,13 +55,15 @@ public class Dispatcher implements IDispatcher {
     @Override
     public void action(ScheduleContext context) {
         try {
-            JobItem jobItem = context.getJobItem();
-            LogUtils.info("[%s][worker] %s was triggered", context.getTriggerId(), jobItem.getName());
+            JobTrigger jobTrigger = context.getJobTrigger();
+            JobMeta jobMeta = jobTrigger.getJobMeta();
+
+            LogUtils.info("[%s][worker] %s was triggered", context.getTriggerId(), jobMeta.getName());
             // 1. find cluster
-            List<Worker> workers = discovery(jobItem);
+            List<Worker> workers = discovery(jobTrigger);
 
             // 2. route
-            workers = route(context, jobItem, workers);
+            workers = route(context, jobTrigger, workers);
 
             // 3. load balance
             workers = loadBalance(workers);
@@ -75,12 +78,13 @@ public class Dispatcher implements IDispatcher {
         }
     }
 
-    private List<Worker> discovery(JobItem jobItem) {
-        String dataId = jobItem.getAppName();
+    private List<Worker> discovery(JobTrigger jobTrigger) {
+        JobMeta jobMeta = jobTrigger.getJobMeta();
+        String dataId = jobMeta.getAppName();
         List<Publisher> publishers = this.discovery.discovery(dataId);
         if (CollectionUtils.isEmpty(publishers)) {
             throw new RuntimeException(String.format("The instance of %s does not found",
-                    jobItem.getAppName()));
+                    jobMeta.getAppName()));
         }
 
         List<Worker> workerList = Lists.newArrayList();
@@ -93,10 +97,11 @@ public class Dispatcher implements IDispatcher {
         return workerList;
     }
 
-    private List<Worker> route(ScheduleContext context, JobItem jobItem,
+    private List<Worker> route(ScheduleContext context, JobTrigger jobTrigger,
                                List<Worker> workers) {
+        JobMeta jobMeta = jobTrigger.getJobMeta();
         RouterContext routerContext = new RouterContext();
-        routerContext.setWorkerGroup(jobItem.getWorkerGroup());
+        routerContext.setWorkerGroup(jobMeta.getWorkerGroup());
         routerContext.setTags(context.getTags());
 
         for (IRouter router : routers) {

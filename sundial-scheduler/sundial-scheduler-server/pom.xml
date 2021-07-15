@@ -25,7 +25,6 @@
         <dependency>
             <groupId>cn.wegostack</groupId>
             <artifactId>sundial-scheduler-core</artifactId>
-            <scope>compile</scope>
         </dependency>
 
         <!-- grpc -->

@@ -11,7 +11,7 @@
     </parent>
 
     <groupId>cn.wegostack</groupId>
-    <artifactId>sundail-scheduler-dal</artifactId>
+    <artifactId>sundial-scheduler-dal</artifactId>
     <name>sundial-scheduler-dal</name>
 
     <dependencies>

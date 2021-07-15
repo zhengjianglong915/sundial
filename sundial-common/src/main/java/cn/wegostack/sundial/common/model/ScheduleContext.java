@@ -27,7 +27,7 @@ public class ScheduleContext {
     /**
      * Job meta
      */
-    private JobItem jobItem;
+    private JobTrigger jobTrigger;
 
     /**
      * Set biz tags

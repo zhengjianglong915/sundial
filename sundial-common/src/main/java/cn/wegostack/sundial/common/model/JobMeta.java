@@ -25,14 +25,14 @@ public class JobMeta {
 
     private TriggerType triggerType;
 
-    private String handler;
-
-    private String workerGroup;
-
     /**
      * time, cron or period
      */
     private String triggerExp;
+
+    private String handler;
+
+    private String workerGroup;
 
     private String version;
 

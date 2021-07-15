@@ -2,10 +2,10 @@ package cn.wegostack.sundial.scheduler.dal.service;
 
 import cn.wegostack.sundial.scheduler.dal.entity.ServerDO;
 import cn.wegostack.sundial.scheduler.dal.repository.ServerRepository;
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Date;
 import java.util.List;

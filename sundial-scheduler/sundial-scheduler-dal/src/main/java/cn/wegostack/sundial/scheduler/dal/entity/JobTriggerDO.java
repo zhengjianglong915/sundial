@@ -10,33 +10,51 @@ import java.util.Date;
 
 /**
  * @author zhengjianglong
- * @since 2021-07-04
+ * @since 2021-07-11
  */
 @Data
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "t_job")
-public class JobDO {
+@Table(name = "t_job_trigger")
+public class JobTriggerDO {
 
     @Id
     @GeneratedValue
     private Long id;
 
-    @Column(length = 20)
+    @Column
     private String jobId;
 
-    @Column(length = 50)
-    private String name;
+    /**
+     * The trigger was load in the cluster of scheduler server.
+     */
+    @Column(nullable = false)
+    private String loadCluster;
 
-    @Column(length = 50)
-    private String appName;
+    /**
+     * The client cell will received the trigger event.
+     */
+    @Column
+    private String triggerCell;
 
-    @Column(length = 15)
-    private String triggerType;
+    /**
+     * Is open or close
+     */
+    @Column
+    private String status;
 
-    @Column(length = 50)
-    private String triggerExp;
+    @Column
+    private String loadStatus;
 
+    @Column
+    private String loadTime;
+
+    @Column
+    private String loadServer;
+
+    /**
+     * use to sharding
+     */
     @Column
     private Integer slot;
 

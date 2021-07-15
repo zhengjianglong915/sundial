@@ -1,6 +1,6 @@
 package cn.wegostack.sundial.scheduler.core.trigger.queue;
 
-import cn.wegostack.sundial.common.model.JobItem;
+import cn.wegostack.sundial.common.model.JobTrigger;
 import lombok.Data;
 
 import java.util.Date;
@@ -17,6 +17,6 @@ public class TriggerEvent {
 
     private String triggerId;
 
-    private JobItem jobItem;
+    private JobTrigger jobTrigger;
 
 }
