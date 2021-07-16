@@ -1,11 +1,13 @@
 package cn.wegostack.sundial.scheduler.core.cluster;
 
 import cn.wegostack.sundial.common.enums.LoadStatus;
+import cn.wegostack.sundial.common.enums.ServerStatus;
+import cn.wegostack.sundial.common.model.Server;
 import cn.wegostack.sundial.common.threadpool.ScheduledService;
 import cn.wegostack.sundial.common.utils.HostUtils;
 import cn.wegostack.sundial.common.utils.LocalServer;
-import cn.wegostack.sundial.scheduler.dal.entity.Server;
-import cn.wegostack.sundial.scheduler.dal.repository.JobTriggerRepository;
+import cn.wegostack.sundial.scheduler.dal.entity.ServerDO;
+import cn.wegostack.sundial.scheduler.dal.service.JobTriggerService;
 import cn.wegostack.sundial.scheduler.dal.service.ServerService;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
@@ -37,7 +39,7 @@ public class SundialCluster implements Cluster {
     private ServerService serverService;
 
     @Autowired
-    private JobTriggerRepository triggerRepository;
+    private JobTriggerService triggerService;
 
     public SundialCluster() {
 
@@ -55,14 +57,10 @@ public class SundialCluster implements Cluster {
             }
 
             String localIp = HostUtils.getHostIp();
-            Server serverDO = serverService.queryByIp(cluster, localIp);
-            if (serverDO == null) {
-                serverDO = new Server();
-                serverDO.setCluster(cluster);
-                serverDO.setIp(localIp);
-                serverDO.setHostname(HostUtils.getHostname());
-                serverDO.setStatus("RUNNING");
-                serverService.add(serverDO);
+            Server server = serverService.queryByIp(cluster, localIp);
+            if (server == null) {
+                server = buildServer(cluster, localIp);
+                serverService.add(server);
             }
 
             scheduledService = new ScheduledService("Sundial-Cluster", () -> {
@@ -94,7 +92,7 @@ public class SundialCluster implements Cluster {
 
                         for (Integer slot : newSlots) {
                             if (!oldSlots.contains(slot)) {
-                                triggerRepository.updateLoadServerBySlot(LoadStatus.INIT.INIT.name(),
+                                triggerService.updateLoadServerBySlot(LoadStatus.INIT.INIT.name(),
                                         LocalServer.getIp(), slot);
                             }
                         }
@@ -111,12 +109,21 @@ public class SundialCluster implements Cluster {
         }
     }
 
+    private Server buildServer(String cluster, String localIp) {
+        Server server = new Server();
+        server.setCluster(cluster);
+        server.setIp(localIp);
+        server.setHostname(HostUtils.getHostname());
+        server.setStatus(ServerStatus.RUNNING);
+        return server;
+    }
+
     private boolean isServerChange(List<Server> serverList) {
         boolean isChange = false;
         Map<String, Server> newMap = Maps.newConcurrentMap();
-        for (Server serverDO : serverList) {
-            String key = serverDO.getCluster() + "-" + serverDO.getIp();
-            newMap.put(key, serverDO);
+        for (Server server : serverList) {
+            String key = server.getCluster() + "-" + server.getIp();
+            newMap.put(key, server);
             if (!serverMap.containsKey(key)) {
                 isChange = true;
             }

@@ -15,7 +15,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "t_job_trigger")
-public class JobTrigger extends BaseEntity {
+public class JobTriggerDO extends BaseEntity {
 
     @Column
     private String jobId;

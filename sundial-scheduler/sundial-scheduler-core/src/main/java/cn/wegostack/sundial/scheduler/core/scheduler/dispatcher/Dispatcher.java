@@ -2,7 +2,7 @@ package cn.wegostack.sundial.scheduler.core.scheduler.dispatcher;
 
 
 
-import cn.wegostack.sundial.common.enums.JobTypeEnums;
+import cn.wegostack.sundial.common.enums.JobType;
 import cn.wegostack.sundial.common.model.JobMeta;
 import cn.wegostack.sundial.common.model.JobTrigger;
 import cn.wegostack.sundial.common.model.ScheduleContext;
@@ -48,7 +48,7 @@ public class Dispatcher implements IDispatcher {
     }
 
     @Override
-    public Set<JobTypeEnums> type() {
+    public Set<JobType> type() {
         return null;
     }
 

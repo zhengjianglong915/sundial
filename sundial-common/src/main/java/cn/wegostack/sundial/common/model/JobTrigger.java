@@ -1,7 +1,11 @@
 package cn.wegostack.sundial.common.model;
 
+import cn.wegostack.sundial.common.enums.LoadStatus;
+import cn.wegostack.sundial.common.enums.TriggerStatus;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Date;
 
 /**
  * @author zhengjianglong
@@ -10,7 +14,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class JobTrigger {
-
     /**
      * jobId +  loadCluster + triggerCell
      */
@@ -22,11 +25,11 @@ public class JobTrigger {
 
     private String triggerCell;
 
-    private String status;
+    private TriggerStatus status = TriggerStatus.CLOSED;
 
-    private String loadStatus;
+    private LoadStatus loadStatus = LoadStatus.INIT;
 
-    private String loadTime;
+    private Date loadTime;
 
     private String loadServer;
 

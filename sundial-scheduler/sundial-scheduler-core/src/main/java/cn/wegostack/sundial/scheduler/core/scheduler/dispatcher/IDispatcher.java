@@ -1,7 +1,7 @@
 package cn.wegostack.sundial.scheduler.core.scheduler.dispatcher;
 
 
-import cn.wegostack.sundial.common.enums.JobTypeEnums;
+import cn.wegostack.sundial.common.enums.JobType;
 import cn.wegostack.sundial.common.model.ScheduleContext;
 
 import java.util.Set;
@@ -12,7 +12,7 @@ import java.util.Set;
  */
 public interface IDispatcher extends Runnable {
 
-    Set<JobTypeEnums> type();
+    Set<JobType> type();
 
     void action(ScheduleContext context);
 

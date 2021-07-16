@@ -1,6 +1,6 @@
 package cn.wegostack.sundial.scheduler.dal.repository;
 
-import cn.wegostack.sundial.scheduler.dal.entity.JobTrigger;
+import cn.wegostack.sundial.scheduler.dal.entity.JobTriggerDO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -14,7 +14,7 @@ import javax.transaction.Transactional;
  * @since 2021-07-04
  */
 @Repository
-public interface JobTriggerRepository extends JpaRepository<JobTrigger, Long> {
+public interface JobTriggerRepository extends JpaRepository<JobTriggerDO, Long> {
 
     /**
      * update load server by slot
@@ -25,9 +25,8 @@ public interface JobTriggerRepository extends JpaRepository<JobTrigger, Long> {
      */
     @Transactional
     @Modifying(flushAutomatically = true)
-    @Query(value = "update t_job_trigger set load_status = :loadStatus, load_server = :loadServer"
-            + " where slot = :slot",
-            nativeQuery = true)
+    @Query(value = "update JobTriggerDO j set j.loadStatus = :loadStatus, j.loadServer = :loadServer"
+            + " where j.slot = :slot")
     int updateLoadServerBySlot(@Param("loadStatus") String loadStatus,
                                @Param("loadServer") String loadServer,
                                @Param("slot") Integer slot);

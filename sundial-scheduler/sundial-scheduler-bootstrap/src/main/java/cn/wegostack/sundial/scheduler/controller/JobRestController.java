@@ -3,7 +3,7 @@ package cn.wegostack.sundial.scheduler.controller;
 import cn.wegostack.sundial.common.constants.CommonConstants;
 import cn.wegostack.sundial.common.exception.BadRequestException;
 import cn.wegostack.sundial.common.utils.Generator;
-import cn.wegostack.sundial.scheduler.dal.entity.Job;
+import cn.wegostack.sundial.scheduler.dal.entity.JobDO;
 import cn.wegostack.sundial.scheduler.dal.repository.JobRepository;
 import cn.wegostack.sundial.scheduler.model.constants.RestConstants;
 import cn.wegostack.sundial.scheduler.model.request.AddJobRequest;
@@ -40,7 +40,7 @@ public class JobRestController {
             throw new BadRequestException("The appName should not be empty.");
         }
 
-        Job jobDO = new Job();
+        JobDO jobDO = new JobDO();
         BeanUtils.copyProperties(request, jobDO);
 
         String jobId = Generator.genJobId();

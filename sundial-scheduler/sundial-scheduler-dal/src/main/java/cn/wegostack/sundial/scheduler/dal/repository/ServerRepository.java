@@ -1,6 +1,6 @@
 package cn.wegostack.sundial.scheduler.dal.repository;
 
-import cn.wegostack.sundial.scheduler.dal.entity.Server;
+import cn.wegostack.sundial.scheduler.dal.entity.ServerDO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -16,7 +16,7 @@ import java.util.List;
  * @since 2021-07-04
  */
 @Repository
-public interface ServerRepository extends JpaRepository<Server, Long> {
+public interface ServerRepository extends JpaRepository<ServerDO, Long> {
 
     /**
      * update heartbeat of server
@@ -27,8 +27,8 @@ public interface ServerRepository extends JpaRepository<Server, Long> {
      */
     @Transactional
     @Modifying(flushAutomatically = true)
-    @Query(value = "update t_server set heartbeat = CURRENT_TIMESTAMP where cluster = :cluster and ip = :localIp",
-            nativeQuery = true)
+    @Query(value = "update ServerDO s set s.heartbeat = CURRENT_TIMESTAMP "
+            + "where s.cluster = :cluster and s.ip = :localIp")
     int updateHeartBeat(@Param("cluster") String cluster, @Param("localIp") String localIp);
 
     /**
@@ -45,6 +45,6 @@ public interface ServerRepository extends JpaRepository<Server, Long> {
      * @param cluster
      * @return
      */
-    @Query(value = "select * from t_server where cluster = :cluster and heartbeat > :timeout", nativeQuery = true)
-    List<Server> queryAllRunningServers(@Param("cluster") String cluster, @Param("timeout") Date timeout);
+    @Query(value = "select s from ServerDO s where s.cluster = :cluster and s.heartbeat > :timeout")
+    List<ServerDO> queryAllRunningServers(@Param("cluster") String cluster, @Param("timeout") Date timeout);
 }

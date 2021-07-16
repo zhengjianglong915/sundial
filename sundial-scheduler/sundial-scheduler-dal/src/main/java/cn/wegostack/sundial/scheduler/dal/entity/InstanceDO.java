@@ -10,18 +10,19 @@ import java.util.Date;
 
 /**
  * @author zhengjianglong
- * @since 2021-07-10
+ * @since 2021-07-04
  */
-@Data
 @Entity
-@EntityListeners(AuditingEntityListener.class)
-@Table(name = "t_server")
-public class Server extends BaseEntity {
+@Data
+@Table(name = "t_instance")
+public class InstanceDO extends BaseEntity {
 
     @Column(nullable = false, length = 15)
     private String ip;
 
     private String hostname;
+
+    private String appName;
 
     /**
      * instance status:
@@ -33,5 +34,9 @@ public class Server extends BaseEntity {
 
     private Date heartbeat;
 
-    private String cluster;
+    private String region;
+
+    private String dataCenter;
+
+    private String cell;
 }

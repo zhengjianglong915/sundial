@@ -15,7 +15,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "t_job")
-public class Job extends BaseEntity {
+public class JobDO extends BaseEntity {
 
     @Id
     @GeneratedValue

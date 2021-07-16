@@ -1,15 +1,16 @@
 package cn.wegostack.sundial.scheduler.dal.service;
 
-import cn.wegostack.sundial.scheduler.dal.entity.Server;
+import cn.wegostack.sundial.common.model.Server;
+import cn.wegostack.sundial.scheduler.dal.convector.ServerConvector;
+import cn.wegostack.sundial.scheduler.dal.entity.ServerDO;
 import cn.wegostack.sundial.scheduler.dal.repository.ServerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author zhengjianglong
@@ -24,10 +25,11 @@ public class ServerService {
     /**
      * Add server
      *
-     * @param serverDO
+     * @param server
      */
-    public void add(Server serverDO) {
-        serverRepository.saveAndFlush(serverDO);
+    public boolean add(Server server) {
+        ServerDO serverDO = ServerConvector.convect(server);
+        return serverRepository.saveAndFlush(serverDO) != null;
     }
 
     /**
@@ -38,13 +40,15 @@ public class ServerService {
      * @return
      */
     public Server queryByIp(String cluster, String ip) {
-        Server serverDO = new Server();
+        ServerDO serverDO = new ServerDO();
         serverDO.setIp(ip);
         serverDO.setCluster(cluster);
-
         Example example = Example.of(serverDO);
-        List<Server> serverDOList = serverRepository.findAll(example);
-        return CollectionUtils.isEmpty(serverDOList) ? null : serverDOList.get(0);
+        Optional<ServerDO> one = serverRepository.findOne(example);
+        if (!one.isPresent()) {
+            return null;
+        }
+        return ServerConvector.convect(one.get());
     }
 
     /**
@@ -70,6 +74,6 @@ public class ServerService {
      * @return
      */
     public List<Server> getRunningServers(String cluster, Date timeout) {
-        return serverRepository.queryAllRunningServers(cluster, timeout);
+        return ServerConvector.convect(serverRepository.queryAllRunningServers(cluster, timeout));
     }
 }

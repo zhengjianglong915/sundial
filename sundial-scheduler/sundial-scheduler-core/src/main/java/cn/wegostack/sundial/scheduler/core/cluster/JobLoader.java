@@ -1,28 +1,21 @@
 package cn.wegostack.sundial.scheduler.core.cluster;
 
-import cn.wegostack.sundial.common.enums.TriggerType;
 import cn.wegostack.sundial.common.model.JobMeta;
+import cn.wegostack.sundial.common.model.JobTrigger;
 import cn.wegostack.sundial.common.threadpool.ScheduledService;
 import cn.wegostack.sundial.common.utils.LocalServer;
-import cn.wegostack.sundial.scheduler.core.trigger.ITriggerManager;
-import cn.wegostack.sundial.scheduler.core.trigger.TriggerManagerFactory;
-import cn.wegostack.sundial.scheduler.dal.entity.Job;
-import cn.wegostack.sundial.scheduler.dal.entity.JobTrigger;
-import cn.wegostack.sundial.scheduler.dal.repository.JobRepository;
-import cn.wegostack.sundial.scheduler.dal.repository.JobTriggerRepository;
+import cn.wegostack.sundial.scheduler.dal.entity.JobTriggerDO;
+import cn.wegostack.sundial.scheduler.dal.service.JobService;
+import cn.wegostack.sundial.scheduler.dal.service.JobTriggerService;
 import com.google.common.collect.Maps;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -36,10 +29,10 @@ public class JobLoader {
     private ScheduledService scheduledService;
 
     @Autowired
-    private JobTriggerRepository triggerRepository;
+    private JobTriggerService jobTriggerService;
 
     @Autowired
-    private JobRepository jobRepository;
+    private JobService jobService;
 
     private Map<String, JobTrigger> triggerDOMap = Maps.newConcurrentMap();
 
@@ -53,46 +46,32 @@ public class JobLoader {
     }
 
     private void loadJob() {
-        JobTrigger query = new JobTrigger();
-        query.setLoadCluster(LocalServer.getCluster());
-        query.setLoadServer(LocalServer.getIp());
-        query.setLoadStatus("INIT");
-        query.setStatus("OPEN");
-        Example example = Example.of(query);
-        List<JobTrigger> triggers = triggerRepository.findAll(example);
-
-        if (CollectionUtils.isEmpty(triggers)) {
+        // query all need load trigger
+        List<JobTrigger> needLoadTriggers = jobTriggerService.getNeedLoadTriggers(LocalServer.getCluster(),
+                LocalServer.getIp());
+        if (CollectionUtils.isEmpty(needLoadTriggers)) {
             return;
         }
 
-        for (JobTrigger trigger : triggers) {
-            String jobId = trigger.getJobId();
+        for (JobTrigger trigger : needLoadTriggers) {
+            JobMeta jobMeta = trigger.getJobMeta();
+            String jobId = jobMeta.getJobId();
             try {
                 String key = jobId + "#" + trigger.getTriggerCell();
                 if (triggerDOMap.containsKey(key)) {
                     continue;
                 }
 
-                cn.wegostack.sundial.common.model.JobTrigger jobTrigger = new cn.wegostack.sundial.common.model.JobTrigger();
-                BeanUtils.copyProperties(trigger, jobTrigger);
+                jobMeta = jobService.findByJobId(jobId);
 
-                Job jobDO = new Job();
-                jobDO.setJobId(trigger.getJobId());
-                Example queryJob = Example.of(jobDO);
-                Optional<Job> one = jobRepository.findOne(queryJob);
-                jobDO = one.get();
+//                JobMeta jobMeta = new JobMeta();
+//                BeanUtils.copyProperties(jobDO, jobMeta);
+//                jobMeta.setTriggerType(TriggerType.valueOf(jobDO.getTriggerType()));
+//                jobTrigger.setJobMeta(jobMeta);
+//                ITriggerManager triggerManager = TriggerManagerFactory.getTriggerManager(jobMeta.getTriggerType());
+//                triggerManager.add(jobTrigger);
 
-                JobMeta jobMeta = new JobMeta();
-                BeanUtils.copyProperties(jobDO, jobMeta);
-                jobMeta.setTriggerType(TriggerType.valueOf(jobDO.getTriggerType()));
-                jobTrigger.setJobMeta(jobMeta);
-
-                ITriggerManager triggerManager = TriggerManagerFactory.getTriggerManager(jobMeta.getTriggerType());
-                triggerManager.add(jobTrigger);
-
-                trigger.setLoadStatus("LOAD");
-                trigger.setLoadTime(new Date());
-                triggerRepository.saveAndFlush(trigger);
+                jobTriggerService.loadTrigger(trigger);
             } catch (Exception e) {
                 LOGGER.error(String.format("[JobLoader] Failed to load job trigger %s", jobId), e);
             }

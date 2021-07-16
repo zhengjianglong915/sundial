@@ -4,8 +4,8 @@ import cn.wegostack.sundial.common.enums.TriggerStatus;
 import cn.wegostack.sundial.common.exception.BadRequestException;
 import cn.wegostack.sundial.common.utils.LocalServer;
 import cn.wegostack.sundial.scheduler.core.cluster.ConsistantHash;
-import cn.wegostack.sundial.scheduler.dal.entity.Job;
-import cn.wegostack.sundial.scheduler.dal.entity.JobTrigger;
+import cn.wegostack.sundial.scheduler.dal.entity.JobDO;
+import cn.wegostack.sundial.scheduler.dal.entity.JobTriggerDO;
 import cn.wegostack.sundial.scheduler.dal.repository.JobRepository;
 import cn.wegostack.sundial.scheduler.dal.repository.JobTriggerRepository;
 import cn.wegostack.sundial.scheduler.model.constants.RestConstants;
@@ -44,10 +44,10 @@ public class JobTriggerController {
             throw new BadRequestException("The jobId should not be empty.");
         }
 
-        Job jobDO = new Job();
+        JobDO jobDO = new JobDO();
         jobDO.setJobId(request.getJobId());
         Example example = Example.of(jobDO);
-        Optional<Job> one = jobRepository.findOne(example);
+        Optional<JobDO> one = jobRepository.findOne(example);
         if (!one.isPresent()) {
             throw new BadRequestException(String.format("The job does not found by %s", request.getJobId()));
         }
@@ -59,13 +59,13 @@ public class JobTriggerController {
         }
 
 
-        JobTrigger jobTriggerDO = new JobTrigger();
+        JobTriggerDO jobTriggerDO = new JobTriggerDO();
         jobTriggerDO.setJobId(jobDO.getJobId());
         jobTriggerDO.setLoadCluster(cluster);
         jobTriggerDO.setTriggerCell("DEFAULT");
 
         Example e = Example.of(jobTriggerDO);
-        Optional<JobTrigger> triggerOne = jobTriggerRepository.findOne(e);
+        Optional<JobTriggerDO> triggerOne = jobTriggerRepository.findOne(e);
         if (triggerOne.isPresent()) {
             if (TriggerStatus.OPEN.name().equals(jobTriggerDO.getStatus())) {
                 return result;
