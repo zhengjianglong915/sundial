@@ -14,13 +14,8 @@ import java.util.Date;
  */
 @Data
 @Entity
-@EntityListeners(AuditingEntityListener.class)
 @Table(name = "t_job_trigger")
-public class JobTriggerDO {
-
-    @Id
-    @GeneratedValue
-    private Long id;
+public class JobTrigger extends BaseEntity {
 
     @Column
     private String jobId;
@@ -57,12 +52,4 @@ public class JobTriggerDO {
 
     @Column
     private Date loadTime;
-
-    @CreatedDate
-    @Column(updatable = false, nullable = false)
-    private Date createTime;
-
-    @LastModifiedDate
-    @Column(nullable = false)
-    private Date modifyTime;
 }

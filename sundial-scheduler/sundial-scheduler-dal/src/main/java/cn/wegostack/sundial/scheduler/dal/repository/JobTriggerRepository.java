@@ -1,6 +1,6 @@
 package cn.wegostack.sundial.scheduler.dal.repository;
 
-import cn.wegostack.sundial.scheduler.dal.entity.JobTriggerDO;
+import cn.wegostack.sundial.scheduler.dal.entity.JobTrigger;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -14,7 +14,7 @@ import javax.transaction.Transactional;
  * @since 2021-07-04
  */
 @Repository
-public interface JobTriggerRepository extends JpaRepository<JobTriggerDO, Long> {
+public interface JobTriggerRepository extends JpaRepository<JobTrigger, Long> {
 
     /**
      * update load server by slot

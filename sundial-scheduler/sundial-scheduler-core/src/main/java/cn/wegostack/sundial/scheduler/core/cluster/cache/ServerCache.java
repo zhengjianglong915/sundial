@@ -1,10 +1,11 @@
 package cn.wegostack.sundial.scheduler.core.cluster.cache;
 
-import cn.wegostack.sundial.scheduler.dal.entity.JobDO;
-import cn.wegostack.sundial.scheduler.dal.entity.JobTriggerDO;
+import cn.wegostack.sundial.scheduler.dal.entity.Job;
+import cn.wegostack.sundial.scheduler.dal.entity.JobTrigger;
 import com.google.common.collect.Maps;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -13,8 +14,14 @@ import java.util.Map;
  */
 @Service
 public class ServerCache {
-    private Map<String, JobTriggerDO> triggerDOMap = Maps.newConcurrentMap();
+    private Map<String, JobTrigger> triggerDOMap = Maps.newConcurrentMap();
 
-    private Map<String, JobDO> jobMap = Maps.newConcurrentMap();
+    private Map<String, Job> jobMap = Maps.newConcurrentMap();
+
+    /**
+     * slot -> trigger
+     */
+    private static Map<Integer, List<JobTrigger>> slotMap = Maps.newConcurrentMap();
+
 
 }

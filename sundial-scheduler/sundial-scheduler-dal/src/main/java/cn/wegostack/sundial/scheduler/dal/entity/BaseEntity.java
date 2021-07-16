@@ -1,6 +1,5 @@
 package cn.wegostack.sundial.scheduler.dal.entity;
 
-import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -8,35 +7,20 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.util.Date;
 
-/**
- * @author zhengjianglong
- * @since 2021-07-10
- */
-@Data
-@Entity
+@MappedSuperclass
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "t_server")
-public class ServerDO {
+public abstract class BaseEntity {
     @Id
-    @GeneratedValue
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
+    private long id;
 
-    @Column(nullable = false, length = 15)
-    private String ip;
+    @Column
+    private String createBy;
 
-    private String hostname;
-
-    /**
-     * instance status:
-     * <b>RUNNING<b/>
-     * <b>DOWN<b/>
-     */
-    @Column(length = 10)
-    private String status;
-
-    private Date heartbeat;
-
-    private String cluster;
+    @Column
+    private String lastModifiedBy;
 
     @CreatedDate
     @Column(updatable = false, nullable = false)

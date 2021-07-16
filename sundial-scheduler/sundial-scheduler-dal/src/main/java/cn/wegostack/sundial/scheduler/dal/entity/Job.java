@@ -14,36 +14,30 @@ import java.util.Date;
  */
 @Data
 @Entity
-@EntityListeners(AuditingEntityListener.class)
-@Table(name = "t_instance")
-public class InstanceDO {
+@Table(name = "t_job")
+public class Job extends BaseEntity {
 
     @Id
     @GeneratedValue
     private Long id;
 
-    @Column(nullable = false, length = 15)
-    private String ip;
+    @Column(length = 20)
+    private String jobId;
 
-    private String hostname;
+    @Column(length = 50)
+    private String name;
 
+    @Column(length = 50)
     private String appName;
 
-    /**
-     * instance status:
-     * <b>RUNNING<b/>
-     * <b>DOWN<b/>
-     */
-    @Column(length = 10)
-    private String status;
+    @Column(length = 15)
+    private String triggerType;
 
-    private Date heartbeat;
+    @Column(length = 50)
+    private String triggerExp;
 
-    private String region;
-
-    private String dataCenter;
-
-    private String cell;
+    @Column
+    private Integer slot;
 
     @CreatedDate
     @Column(updatable = false, nullable = false)

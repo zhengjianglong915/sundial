@@ -47,6 +47,10 @@ public class SlotManager {
         return slots[slot] == 1;
     }
 
+    public static void setSlot(int slot) {
+        slots[slot] = 1;
+    }
+
     /**
      * Get all slot belongs to the local server
      *

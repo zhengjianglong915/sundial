@@ -1,10 +1,11 @@
 package cn.wegostack.sundial.scheduler.dal.service;
 
-import cn.wegostack.sundial.scheduler.dal.entity.ServerDO;
+import cn.wegostack.sundial.scheduler.dal.entity.Server;
 import cn.wegostack.sundial.scheduler.dal.repository.ServerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Date;
@@ -14,7 +15,7 @@ import java.util.List;
  * @author zhengjianglong
  * @since 2021-07-10
  */
-@Component
+@Service
 public class ServerService {
 
     @Autowired
@@ -25,7 +26,7 @@ public class ServerService {
      *
      * @param serverDO
      */
-    public void add(ServerDO serverDO) {
+    public void add(Server serverDO) {
         serverRepository.saveAndFlush(serverDO);
     }
 
@@ -36,13 +37,13 @@ public class ServerService {
      * @param ip
      * @return
      */
-    public ServerDO queryByIp(String cluster, String ip) {
-        ServerDO serverDO = new ServerDO();
+    public Server queryByIp(String cluster, String ip) {
+        Server serverDO = new Server();
         serverDO.setIp(ip);
         serverDO.setCluster(cluster);
 
         Example example = Example.of(serverDO);
-        List<ServerDO> serverDOList = serverRepository.findAll(example);
+        List<Server> serverDOList = serverRepository.findAll(example);
         return CollectionUtils.isEmpty(serverDOList) ? null : serverDOList.get(0);
     }
 
@@ -68,7 +69,7 @@ public class ServerService {
      * @param timeout
      * @return
      */
-    public List<ServerDO> getRunningServers(String cluster, Date timeout) {
+    public List<Server> getRunningServers(String cluster, Date timeout) {
         return serverRepository.queryAllRunningServers(cluster, timeout);
     }
 }

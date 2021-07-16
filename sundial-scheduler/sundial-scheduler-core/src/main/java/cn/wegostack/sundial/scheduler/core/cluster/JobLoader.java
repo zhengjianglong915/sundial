@@ -2,13 +2,12 @@ package cn.wegostack.sundial.scheduler.core.cluster;
 
 import cn.wegostack.sundial.common.enums.TriggerType;
 import cn.wegostack.sundial.common.model.JobMeta;
-import cn.wegostack.sundial.common.model.JobTrigger;
 import cn.wegostack.sundial.common.threadpool.ScheduledService;
 import cn.wegostack.sundial.common.utils.LocalServer;
 import cn.wegostack.sundial.scheduler.core.trigger.ITriggerManager;
 import cn.wegostack.sundial.scheduler.core.trigger.TriggerManagerFactory;
-import cn.wegostack.sundial.scheduler.dal.entity.JobDO;
-import cn.wegostack.sundial.scheduler.dal.entity.JobTriggerDO;
+import cn.wegostack.sundial.scheduler.dal.entity.Job;
+import cn.wegostack.sundial.scheduler.dal.entity.JobTrigger;
 import cn.wegostack.sundial.scheduler.dal.repository.JobRepository;
 import cn.wegostack.sundial.scheduler.dal.repository.JobTriggerRepository;
 import com.google.common.collect.Maps;
@@ -42,7 +41,7 @@ public class JobLoader {
     @Autowired
     private JobRepository jobRepository;
 
-    private Map<String, JobTriggerDO> triggerDOMap = Maps.newConcurrentMap();
+    private Map<String, JobTrigger> triggerDOMap = Maps.newConcurrentMap();
 
     public JobLoader() {
         scheduledService = new ScheduledService("Sundial-JobLoader", () -> {
@@ -54,19 +53,19 @@ public class JobLoader {
     }
 
     private void loadJob() {
-        JobTriggerDO query = new JobTriggerDO();
+        JobTrigger query = new JobTrigger();
         query.setLoadCluster(LocalServer.getCluster());
         query.setLoadServer(LocalServer.getIp());
         query.setLoadStatus("INIT");
         query.setStatus("OPEN");
         Example example = Example.of(query);
-        List<JobTriggerDO> triggers = triggerRepository.findAll(example);
+        List<JobTrigger> triggers = triggerRepository.findAll(example);
 
         if (CollectionUtils.isEmpty(triggers)) {
             return;
         }
 
-        for (JobTriggerDO trigger : triggers) {
+        for (JobTrigger trigger : triggers) {
             String jobId = trigger.getJobId();
             try {
                 String key = jobId + "#" + trigger.getTriggerCell();
@@ -74,13 +73,13 @@ public class JobLoader {
                     continue;
                 }
 
-                JobTrigger jobTrigger = new JobTrigger();
+                cn.wegostack.sundial.common.model.JobTrigger jobTrigger = new cn.wegostack.sundial.common.model.JobTrigger();
                 BeanUtils.copyProperties(trigger, jobTrigger);
 
-                JobDO jobDO = new JobDO();
+                Job jobDO = new Job();
                 jobDO.setJobId(trigger.getJobId());
                 Example queryJob = Example.of(jobDO);
-                Optional<JobDO> one = jobRepository.findOne(queryJob);
+                Optional<Job> one = jobRepository.findOne(queryJob);
                 jobDO = one.get();
 
                 JobMeta jobMeta = new JobMeta();
