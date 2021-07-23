@@ -21,6 +21,7 @@ public class ApplicationStarter {
         try {
             // registry
             server.start();
+            server.blockUntilShutdown();
 
 
         } catch (Exception e) {

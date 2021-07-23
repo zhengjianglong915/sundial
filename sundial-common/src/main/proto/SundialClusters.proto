@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package sundial.cluster;
+option java_package = "cn.wegostack.sundial.common.proto";
+option java_outer_classname = "SundialClusterProto";
+
+service ClusterService {
+  rpc join (stream ClusterCommand) returns (stream ClusterResult) {}
+}
+
+message ClusterCommand {
+  string region = 1;
+  string datacenter = 2;
+  string cluster = 3;
+  string hostname = 4;
+  string ip = 5;
+}
+
+message ClusterResult {
+  string status = 1;
+  string msg = 2;
+}

@@ -92,7 +92,7 @@
                 <plugin>
                     <groupId>org.xolstice.maven.plugins</groupId>
                     <artifactId>protobuf-maven-plugin</artifactId>
-                    <version>${maven-jar-plugin.version}</version>
+                    <version>${protobuf-maven-plugin.version}</version>
 
                     <configuration>
                         <protoSourceRoot>src/main/proto</protoSourceRoot>

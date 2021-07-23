@@ -1,45 +1,34 @@
-package cn.wegostack.sundial.discovery.registry;
+package cn.wegostack.sundial.scheduler.core.cluster.server;
 
-import cn.wegostack.sundial.discovery.registry.processor.SundialRegistryProcessor;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-/**
- * @author zhengjianglong
- * @since 2021-06-28
- */
-@Service
-public class SundialRegistryServer implements AutoCloseable {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SundialRegistryServer.class);
+public class SundialServer implements AutoCloseable {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SundialServer.class);
 
     private Server server;
 
-    @Autowired
-    private SundialRegistryProcessor registryProcessor;
-
     public void start() throws IOException {
-        int port = 8600;
+        int port = 8601;
         server = ServerBuilder.forPort(port)
-                .addService(registryProcessor)
+                .addService(new ClusterService())
                 .build()
                 .start();
 
-        LOGGER.info("[registry] Server started, listening on " + port);
+        LOGGER.info("[server] Server started, listening on " + port);
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            LOGGER.error("[registry] shutting down gRPC server since JVM is shutting down");
+            LOGGER.error("[server] shutting down gRPC server since JVM is shutting down");
             try {
                 this.close();
             } catch (Exception e) {
                 e.printStackTrace(System.err);
             }
-            LOGGER.error("[registry] *** server shut down");
+            LOGGER.error("[server] *** server shut down");
         }));
     }
 
