@@ -6,7 +6,6 @@ import cn.wegostack.sundial.common.model.Server;
 import cn.wegostack.sundial.common.threadpool.ScheduledService;
 import cn.wegostack.sundial.common.utils.HostUtils;
 import cn.wegostack.sundial.common.utils.LocalServer;
-import cn.wegostack.sundial.scheduler.dal.entity.ServerDO;
 import cn.wegostack.sundial.scheduler.dal.service.JobTriggerService;
 import cn.wegostack.sundial.scheduler.dal.service.ServerService;
 import com.alibaba.fastjson.JSON;
